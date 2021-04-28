@@ -1,0 +1,16 @@
+<div>
+    <div id="tournament-card-containor" *ngIf="_tournaments.length>0 && _fetchingTournamentsComplete;else tournamentsLoading">
+        <app-tournament-card class="tournament-card" [_tournament]='tournament' *ngFor="let tournament of _tournaments"></app-tournament-card>
+    </div>
+
+    <ng-template #tournamentsLoading>
+        <div id="loading-spinner" >
+            <mat-spinner  *ngIf="_tournaments.length==0 && _fetchingTournamentsComplete==false;else noTournamentsFound"></mat-spinner>
+        </div>
+    </ng-template>
+    <ng-template #noTournamentsFound>
+        <p class="emptyMessage">No tournament have been created yet!</p>
+    </ng-template>
+
+
+</div>

@@ -1,0 +1,27 @@
+<mat-card class="example-card">
+    <mat-card-header>
+        <div mat-card-avatar="mat-card-avatar" class="example-header-image">
+            <img class="tournament-card-user-avatar" src='https://via.placeholder.com/150'/>
+        </div>
+        <mat-card-title>{{_tournament.user.firstName}} {{_tournament.user.lastName}}</mat-card-title>
+        <mat-card-subtitle>{{_tournament.createdAt | date:'fullDate' }}</mat-card-subtitle>
+    </mat-card-header>
+    <div id="tournaments-teams-banner">
+        <p  *ngFor="let team of _tournament.teams ; let i = index" 
+            [attr.team-data-index]='i'>{{team.title | getTeamShortnamePipe}} 
+        </p>
+        <span team-data-index='3'>Vs</span>
+    </div>
+    <mat-card-content>
+        <ul id="tournament-details">
+            <li>{{_tournament.title}}</li>
+            <li>@ {{_tournament.place}}</li>
+            <li>On {{_tournament.startingDate  | date:'fullDate'}}</li>
+            <li>{{_tournament.tournamentPrize}} $ </li>
+        </ul>
+    </mat-card-content>
+    <mat-card-actions id="tournament-card-actions">
+        <button mat-button="mat-button">LIKE</button>
+        <button mat-button="mat-button">SHARE</button>
+    </mat-card-actions>
+</mat-card>

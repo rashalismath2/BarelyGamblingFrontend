@@ -1,0 +1,45 @@
+.tournament-card-user-avatar{
+    width: 100%;
+}
+
+#tournaments-teams-banner{
+    background: dimgrey;
+    display: flex;
+    height: 90px;
+    font-size: 30px;
+    color: white;
+    justify-content: space-around;
+}
+p[team-data-index],span[team-data-index]{
+    color: white;
+    padding: 35px 10px 35px 10px;
+    letter-spacing: 3px;
+}
+p[team-data-index='0']{
+    order: 1;
+}
+p[team-data-index='2']{
+    order: 3;
+}
+p[team-data-index='3']{
+    order: 2;
+}
+#tournament-details{
+    padding: 0;
+    list-style: none;
+    margin-top: 15px;
+    text-align: center;
+}
+#tournament-details li{
+    margin: 5px;
+}
+#tournament-details li:first-child{
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 15px;
+}
+
+#tournament-card-actions{
+    display: flex;
+    justify-content: flex-end;
+}

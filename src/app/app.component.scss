@@ -1,0 +1,19 @@
+#app-nav-bar{
+    height: 60px;
+    border-bottom: 1px solid grey;
+}
+
+#app-drawer-container{
+    height: calc(100vh - 60px);
+}
+#side-drawer{
+    width: 20%;
+}
+.drawer-buttons{
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.drawer-button-icons{
+    margin-right: 25px;
+}
