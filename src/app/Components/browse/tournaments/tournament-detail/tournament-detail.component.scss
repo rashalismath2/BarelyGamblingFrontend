@@ -1,0 +1,81 @@
+.tournament-details-list{
+    padding: 0;
+    list-style: none;
+    margin-top: 25px !important;
+    font-size: 18px;
+    text-align: center;
+}
+.tournament-details-list li{
+    margin-bottom: 5px;
+}
+.tournament-details-list li span{
+    font-weight: bold;
+}
+.tournament-details-list li:first-child{
+    width: fit-content;
+    margin: 20px auto;
+    padding: 10px;
+    color: #673ab7;
+    border: 1px solid black
+}
+
+
+.tournament-details-hr{
+    border-top: 1px solid;
+    margin: 0 16%;
+}
+
+#tournament-details-teams-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+#tournament-details-teams-container ul{
+    padding: 0;
+    list-style: none;
+    width: 40%;
+    font-size: 15px;
+}
+#tournament-details-teams-container li{
+    margin-bottom: 5px;
+}
+#tournament-details-teams-container li:first-child{
+    position: relative;
+}
+#tournament-details-teams-container li span{
+    font-weight: bold;
+}
+
+.tournament-team-won {
+    font-size: 12px;
+    width: fit-content;
+    margin: 0;
+    text-align: white;
+    color: white;
+    padding: 5px;
+    border-radius: 15px;
+    top: -25px;
+    position: absolute;
+    left: -60px;
+    transform: rotate(343deg);
+}
+
+.tournament-team-memebers{
+    width: 80% !important;
+    padding-left: 15px !important;
+}
+.tournament-team-memebers li{
+    margin-bottom: 15px !important;
+}
+.tournament-team-memebers .mat-card-subtitle{
+    margin-bottom: 0;
+}
+.tournament-team-memebers .example-card{
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.tournament-card-user-avatar{
+    width: 100%;
+}

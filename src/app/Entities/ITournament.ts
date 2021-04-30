@@ -13,4 +13,7 @@ export interface ITournament{
     tournamentPrize:number;
     teams:ITeam[];
     user:IUser;
+    hasEnded:boolean;
+    hasStarted:boolean;
+
 }

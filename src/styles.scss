@@ -8,8 +8,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 a:hover{
     text-decoration: none;
+    color: inherit;
 }
-
+a{
+    color: inherit;
+}
 .emptyMessage{
     text-align: center;
     font-size: 20px;

@@ -1,0 +1,6 @@
+<div id="tournaments-teams-banner">
+    <p  *ngFor="let team of teams ; let i = index" 
+        [attr.team-data-index]='i'>{{team.title | getTeamShortnamePipe}} 
+    </p>
+    <span team-data-index='3'>Vs</span>
+</div>

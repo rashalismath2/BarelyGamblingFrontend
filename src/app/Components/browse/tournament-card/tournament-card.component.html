@@ -1,20 +1,17 @@
 <mat-card class="example-card">
     <mat-card-header>
         <div mat-card-avatar="mat-card-avatar" class="example-header-image">
-            <img class="tournament-card-user-avatar" src='https://via.placeholder.com/150'/>
+            <img class="tournament-card-user-avatar" src={{_tournament.user.coverUrl}}/>
         </div>
         <mat-card-title>{{_tournament.user.firstName}} {{_tournament.user.lastName}}</mat-card-title>
         <mat-card-subtitle>{{_tournament.createdAt | date:'fullDate' }}</mat-card-subtitle>
     </mat-card-header>
-    <div id="tournaments-teams-banner">
-        <p  *ngFor="let team of _tournament.teams ; let i = index" 
-            [attr.team-data-index]='i'>{{team.title | getTeamShortnamePipe}} 
-        </p>
-        <span team-data-index='3'>Vs</span>
-    </div>
+
+    <app-tournament-banner [teams]='_tournament.teams'></app-tournament-banner>
+    
     <mat-card-content>
         <ul id="tournament-details">
-            <li>{{_tournament.title}}</li>
+            <li><a [routerLink]="[ '/tournaments',_tournament.id]">{{_tournament.title}}</a></li>
             <li>@ {{_tournament.place}}</li>
             <li>On {{_tournament.startingDate  | date:'fullDate'}}</li>
             <li>{{_tournament.tournamentPrize}} $ </li>

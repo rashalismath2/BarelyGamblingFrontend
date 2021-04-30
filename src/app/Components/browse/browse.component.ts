@@ -17,7 +17,7 @@ export class BrowseComponent implements OnInit {
   constructor(private _tournamentService:TournamentService) { }
 
   ngOnInit(): void {
-    this._tournamentService.GetTournaments()
+    this._tournamentService.GetAllTournaments()
               .pipe(
                 tap(data=>console.log(data)),
                 catchError(this.HandleRetrievingTournamentError)
@@ -43,7 +43,7 @@ export class BrowseComponent implements OnInit {
       this._errorMessage=err.error.message
     }
     else{
-      this._errorMessage="An unhandled exception"
+      this._errorMessage="Something went wrong"
     }
     return throwError
   }

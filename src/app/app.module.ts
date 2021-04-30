@@ -11,13 +11,18 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatDividerModule} from '@angular/material/divider';
 
 import { NavBarComponent } from './Components/nav-bar/nav-bar.component';
 import { BrowseComponent } from './Components/browse/browse.component';
 import { BiddingsComponent } from './Components/biddings/biddings.component';
 import { TournamentCardComponent } from './Components/browse/tournament-card/tournament-card.component';
+import { TournamentDetailComponent } from './Components/browse/tournaments/tournament-detail/tournament-detail.component';
+import { TournamentBannerComponent } from './Components/browse/banner/tournament-banner/tournament-banner.component';
+
 
 import { GetTeamShortnamePipe } from './Pipes/get-team-shortname.pipe';
+import { GetCurrencyPipe } from './Pipes/get-currency.pipe';
 
 
 
@@ -30,7 +35,9 @@ import { GetTeamShortnamePipe } from './Pipes/get-team-shortname.pipe';
     BiddingsComponent,
     TournamentCardComponent,
     GetTeamShortnamePipe,
-    
+    TournamentDetailComponent,
+    TournamentBannerComponent,
+    GetCurrencyPipe,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +49,8 @@ import { GetTeamShortnamePipe } from './Pipes/get-team-shortname.pipe';
     MatSidenavModule,
     MatIconModule,
     MatCardModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
