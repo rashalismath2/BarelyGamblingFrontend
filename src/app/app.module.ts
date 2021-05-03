@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
+
 import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from '@angular/material/icon';
@@ -24,6 +25,8 @@ import { TournamentBannerComponent } from './Components/browse/banner/tournament
 import { GetTeamShortnamePipe } from './Pipes/get-team-shortname.pipe';
 import { GetCurrencyPipe } from './Pipes/get-currency.pipe';
 
+import { AuthenticationModule } from './authentication/authentication.module';
+
 
 
 
@@ -41,8 +44,10 @@ import { GetCurrencyPipe } from './Pipes/get-currency.pipe';
   ],
   imports: [
     BrowserModule,
+    AuthenticationModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+
     FormsModule,
     HttpClientModule,
     MatButtonModule,
@@ -50,9 +55,12 @@ import { GetCurrencyPipe } from './Pipes/get-currency.pipe';
     MatIconModule,
     MatCardModule,
     MatProgressSpinnerModule,
-    MatDividerModule
+    MatDividerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+
+ }

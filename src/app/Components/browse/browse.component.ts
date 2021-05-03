@@ -19,7 +19,6 @@ export class BrowseComponent implements OnInit {
   ngOnInit(): void {
     this._tournamentService.GetAllTournaments()
               .pipe(
-                tap(data=>console.log(data)),
                 catchError(this.HandleRetrievingTournamentError)
               )
               .subscribe({

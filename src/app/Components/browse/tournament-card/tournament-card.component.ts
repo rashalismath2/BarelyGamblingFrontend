@@ -13,6 +13,6 @@ export class TournamentCardComponent implements OnInit {
   @Input() _tournament:ITournament;
   
   ngOnInit(): void {
-   console.log(this._tournament)
+
   }
 }
