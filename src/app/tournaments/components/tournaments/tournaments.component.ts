@@ -19,19 +19,24 @@ export class TournamentsComponent implements OnInit,OnDestroy {
   componentActive: boolean;
 
   constructor(private tournamentStore:Store<fromTournamentReducer.State>) { 
-    this._tournaments=[]
+  
   }
 
   ngOnInit(): void {
-      this.tournamentStore.dispatch(new fromTournamentActions.LoadTournaments())
+    this.componentActive=true
+    this._fetchingTournamentsComplete=false
 
-      this.tournamentStore
-      .pipe(select(fromTournamentReducer.getTournaments),
-      takeWhile(()=>this.componentActive))
-      .subscribe({
-        next:(tournaments:ITournament[])=>this._tournaments=tournaments,
-        complete:()=>this._fetchingTournamentsComplete=true
-      })
+    this.tournamentStore.dispatch(new fromTournamentActions.LoadTournaments())
+    
+    this.tournamentStore
+    .pipe(select(fromTournamentReducer.getTournaments),
+    takeWhile(()=>this.componentActive))
+    .subscribe({
+      next:(tournaments:ITournament[])=>this._tournaments=tournaments,
+      complete:()=>{
+        this._fetchingTournamentsComplete=false 
+      }
+    })
 
   }
 

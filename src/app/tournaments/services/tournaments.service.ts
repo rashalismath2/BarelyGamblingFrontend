@@ -1,9 +1,11 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ITournament } from 'src/app/Entities/ITournament';
 import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,6 @@ export class TournamentsService {
   constructor(private http:HttpClient) { }
 
   retrieveAllTournaments():Observable<ITournament[]>{
-
     return this.http.get<ITournament[]>(this._url,{
       headers:{
         "Accept":"application/json"

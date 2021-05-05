@@ -1,0 +1,19 @@
+#loading-spinner{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 150px;
+}
+
+#tournament-card-containor{
+    display: flex;
+    align-content: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.tournament-card{
+    width: 45%;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
