@@ -1,4 +1,4 @@
-<mat-card class="example-card">
+<mat-card *ngIf='_tournament' class="example-card">
     <mat-card-header>
         <div mat-card-avatar="mat-card-avatar" class="example-header-image">
             <img class="tournament-card-user-avatar" src={{_tournament.user.coverUrl}}/>

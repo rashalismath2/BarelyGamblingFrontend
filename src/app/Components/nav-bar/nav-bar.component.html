@@ -3,7 +3,13 @@
         <span class="navbar-brand mb-0 h1">BarelyGambling</span>
         
         <div class="d-flex">
-            <button mat-flat-button color="primary">Sign In</button>
+            <div *ngIf='authUser; else showLogin'>
+                {{authUser.user.firstName}}
+            </div>
+            <ng-template #showLogin>
+                <button  [routerLink]="[ '/login']" mat-flat-button color="primary">Sign In</button>
+            </ng-template>
+            
         </div>
     </div>
 </nav>

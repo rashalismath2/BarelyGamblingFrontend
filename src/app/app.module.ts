@@ -4,58 +4,56 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
-
-
-import {MatButtonModule} from '@angular/material/button';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatIconModule} from '@angular/material/icon';
-import {MatCardModule} from '@angular/material/card';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatDividerModule} from '@angular/material/divider';
 
 import { NavBarComponent } from './Components/nav-bar/nav-bar.component';
-import { BrowseComponent } from './Components/browse/browse.component';
+
 import { BiddingsComponent } from './Components/biddings/biddings.component';
-import { TournamentCardComponent } from './Components/browse/tournament-card/tournament-card.component';
-import { TournamentDetailComponent } from './Components/browse/tournaments/tournament-detail/tournament-detail.component';
-import { TournamentBannerComponent } from './Components/browse/banner/tournament-banner/tournament-banner.component';
 
 
-import { GetTeamShortnamePipe } from './Pipes/get-team-shortname.pipe';
-import { GetCurrencyPipe } from './Pipes/get-currency.pipe';
+import { StoreModule } from '@ngrx/store';
+
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+
+import { HomeComponent } from './Components/home/home.component';
 
 import { AuthenticationModule } from './authentication/authentication.module';
-
-
+import { TournamentsModule } from './tournaments/tournaments.module';
+import { SharedModule } from './shared/shared.module';
+import { EffectsModule } from '@ngrx/effects';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
-    BrowseComponent,
+
     BiddingsComponent,
-    TournamentCardComponent,
-    GetTeamShortnamePipe,
-    TournamentDetailComponent,
-    TournamentBannerComponent,
-    GetCurrencyPipe,
+
+
+    HomeComponent,
+
   ],
   imports: [
-    BrowserModule,
     AuthenticationModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
+    TournamentsModule,
+    SharedModule,
 
+    AppRoutingModule,
+
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]), 
+    
+    StoreDevtoolsModule.instrument({
+      name:"App a",
+      maxAge:25,
+      logOnly:environment.production
+    }),
+    BrowserAnimationsModule,
     FormsModule,
-    HttpClientModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatCardModule,
-    MatProgressSpinnerModule,
-    MatDividerModule,
+    
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]

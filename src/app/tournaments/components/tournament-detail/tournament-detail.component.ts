@@ -4,7 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ITournament } from 'src/app/Entities/ITournament';
-import { TournamentService } from 'src/app/Services/tournament.service';
+import { TournamentsService } from '../../services/tournaments.service';
+
 
 @Component({
   selector: 'app-tournament-detail',
@@ -13,7 +14,7 @@ import { TournamentService } from 'src/app/Services/tournament.service';
 })
 export class TournamentDetailComponent implements OnInit {
 
-  constructor(private route:ActivatedRoute,private _tournamentService:TournamentService) { }
+  constructor(private route:ActivatedRoute,private _tournamentService:TournamentsService) { }
 
   _tournament:ITournament=null;
   _errorMessage:string=null;

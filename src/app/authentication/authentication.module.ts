@@ -1,17 +1,24 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './Components/login/login.component';
+import { CommonModule } from '@angular/common';
+import { AppRoutingModule } from './authentication-routing';
+import { StoreModule } from '@ngrx/store';
+import { reducer } from './state/reducer';
+import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './Components/Login/login/login.component';
 
-const routes: Routes = [
-  {path:"login",component:LoginComponent},
-];
+
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  declarations: [
+    LoginComponent
+  ],
+  imports: [
+    AppRoutingModule,
+    StoreModule.forFeature("authentication",reducer),
+    FormsModule
+  ]
 })
 
-export class AuthenticationModule { }
+export class AuthenticationModule {
 
-
-
+ }
