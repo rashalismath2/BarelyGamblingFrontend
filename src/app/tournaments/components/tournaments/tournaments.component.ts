@@ -1,4 +1,5 @@
-import { Input } from '@angular/core';
+import { Input, Output } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
@@ -18,6 +19,8 @@ export class TournamentsComponent implements OnInit,OnDestroy {
   _fetchingTournamentsComplete:boolean
   componentActive: boolean;
 
+  @Output() selectedTournament:EventEmitter<ITournament>=new EventEmitter<ITournament>()
+  
   constructor(private tournamentStore:Store<fromTournamentReducer.State>) { 
   
   }

@@ -11,10 +11,10 @@
     
     <mat-card-content>
         <ul id="tournament-details">
-            <li><a [routerLink]="[ '/tournaments',_tournament.id]">{{_tournament.title}}</a></li>
-            <li>@ {{_tournament.place}}</li>
-            <li>On {{_tournament.startingDate  | date:'fullDate'}}</li>
-            <li>{{_tournament.tournamentPrize}} $ </li>
+            <li><a (click)='getSelectedTournament(_tournament)'>{{_tournament.title}}</a></li>
+            <li><span>@</span> {{_tournament.place}}</li>
+            <li><span>On</span> {{_tournament.startingDate  | date:'fullDate'}}</li>
+            <li><span>Prize</span> {{_tournament.tournamentPrize}} $ </li>
         </ul>
     </mat-card-content>
     <mat-card-actions id="tournament-card-actions">

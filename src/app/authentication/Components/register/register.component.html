@@ -1,0 +1,74 @@
+<div id="auth-cont">
+    <div class="auth-center-cont" id="auth-cont-left">
+       <div class="auth-center">
+            <div class="auth-center-item">
+                <img src="../../../../../assets/images/login-cover.jpg" alt="" srcset="">
+                <span [routerLink]="[ '/home']" class="navbar-brand mb-0 h1">BarelyGambling</span>
+            </div>
+       </div>
+    </div>
+    <div class="auth-center-cont" id="auth-cont-right">
+        <div class="auth-center">
+           <div class="auth-center-item">
+                <div id="auth-form-cont">
+                    <h3>Sign up</h3>
+                    <form id="authForm" [formGroup]="authForm" (ngSubmit)="onSubmit(authForm)">
+                      <div id="register-user-avatar">
+                        <input (change)="preview(cover.files)" #cover formControlName="profileCover" id="profileCover" type="file" accept="image/png, image/jpeg, image/jpg" />
+                        <img [src]="imgURL || '../../../../../assets/images/user-avatar.png'"  alt="" srcset="">
+                        <mat-icon (click)="cover.click()" matPrefix>edit</mat-icon>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <div class="example-container">
+                            <mat-form-field appearance="fill">
+                              <mat-label>First Name</mat-label>
+                              <input matInput  formControlName="firstName"  />
+                              <mat-icon matPrefix>account_circle</mat-icon>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="example-container">
+                            <mat-form-field appearance="fill">
+                              <mat-label>Last Name</mat-label>
+                              <input matInput  formControlName="lastName"  />
+                              <mat-icon matPrefix>account_circle</mat-icon>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col">
+                          <div class="example-container">
+                            <mat-form-field appearance="fill">
+                              <mat-label>Email</mat-label>
+                              <input matInput  formControlName="email"  />
+                              <mat-icon matPrefix>email</mat-icon>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="example-container">
+                            <mat-form-field appearance="fill">
+                              <mat-label>Password</mat-label>
+                              <input type="password" matInput  formControlName="password"  />
+                              <mat-icon matPrefix>lock</mat-icon>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                        <div class="submit-cont">
+                            <button [disabled]="authForm.invalid" type="submit" id="submit-button" mat-flat-button color="basic">Register</button>
+                        </div>
+                    </form>
+                    <div id="createAccount">
+                      <a [routerLink]="[ '/login']">Already have an account? Login</a>
+                    </div>
+                </div>
+           </div>
+        </div>
+    </div>
+</div>
+

@@ -1,5 +1,6 @@
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+
 import { ITournament } from 'src/app/Entities/ITournament';
 
 
@@ -11,8 +12,13 @@ import { ITournament } from 'src/app/Entities/ITournament';
 export class TournamentCardComponent implements OnInit {
 
   @Input() _tournament:ITournament;
+  @Output() selectedTournament:EventEmitter<ITournament>=new EventEmitter<ITournament>()
+
   
   ngOnInit(): void {
 
+  }
+  getSelectedTournament(tournament){
+    this.selectedTournament.emit(tournament)
   }
 }

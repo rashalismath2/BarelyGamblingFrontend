@@ -1,0 +1,144 @@
+
+#auth-cont{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+#auth-cont-left{
+    width: 50%;
+}
+.auth-center-item img{
+    height: 100%;
+    width: 100%;
+}
+
+#auth-cont-right{
+    width: 50%;
+    padding-left: 0px !important;
+}
+
+$padding:20px;
+.auth-center-cont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0 0 $padding;
+}
+
+#auth-cont-right .auth-center{
+    padding: 0 $padding 0 0 !important;
+}
+
+.auth-center{
+    height: 80%;
+    width: 100%;
+}
+
+$background-blue:#3F51B5;
+.auth-center-item{
+    background:$background-blue;
+    height: 100%;
+}
+
+#auth-cont-right .auth-center-item{
+    padding-top: 25px;
+ 
+}
+
+#auth-cont-left .auth-center .auth-center-item{
+    position: relative;
+}
+
+$brand-width:200px;
+$brand-height:50px;
+#auth-cont-left .auth-center .auth-center-item span{
+    // left: calc(50% - 100px);
+    // top: calc(50% - 25px);
+    
+    left: 0;
+    top: -60px;
+
+    z-index: 200;
+    position: absolute;
+    color: black;
+    width: $brand-width;
+    height: $brand-height;
+
+    background: white;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    padding-top: 15px;
+    border: 1px black solid;
+}
+#auth-cont-left .auth-center .auth-center-item span:hover{
+    background: $background-blue;
+    border:1px solid white;
+    color: white;
+    cursor: pointer;
+}
+
+
+#authForm mat-label , #authForm input{
+    color: white;
+}
+
+#auth-form-cont{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: ui-monospace;
+}
+
+form mat-form-field{
+    width: 280px !important;
+}
+
+.submit-cont{
+    text-align: center;
+}
+#submit-button{
+    width: 50%;
+}
+
+#forgotPassword{
+    margin: 0 0 10px 0;
+    text-align: end;
+}
+
+#createAccount{
+    margin-top: 15px;
+}
+#createAccount:hover{
+    text-decoration: underline;
+}
+
+
+#register-user-avatar{
+    width: 70px;
+    height: 70px;
+    margin: 20px auto;
+    position: relative;
+}
+#register-user-avatar img{
+    background: white;
+  border-radius: 50%;
+}
+#register-user-avatar mat-icon{
+    position: absolute;
+    border: 0;
+    top: 45px;
+    left: 53px;
+    background: white;
+    border-radius: 50%;
+    color: $background-blue;
+    font-size: 20px;
+    padding: 3px;
+    cursor: pointer;
+}
+
+#profileCover{
+    display: none;
+}

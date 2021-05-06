@@ -7,7 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { HttpClientModule } from '@angular/common/http';
-
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from "@angular/material/form-field";
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatCardModule,
     MatProgressSpinnerModule,
     MatDividerModule,
-
+    MatFormFieldModule,
+    MatInputModule,
     HttpClientModule
   ],
   exports:[
@@ -31,7 +33,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatCardModule,
     MatProgressSpinnerModule,
     MatDividerModule,
-    
+    MatFormFieldModule,
+    MatInputModule,
     HttpClientModule
   ]
 })

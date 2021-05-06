@@ -33,6 +33,6 @@ import { reducer } from './state/reducer';
     StoreModule.forFeature("tournaments",reducer),
     EffectsModule.forFeature([TournamentEffects]), 
   ],
-  exports:[TournamentsComponent]
+  exports:[TournamentsComponent,TournamentDetailComponent]
 })
 export class TournamentsModule { }

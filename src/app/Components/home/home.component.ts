@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
 
   public selectedTab:string="tournaments"
   public _tournaments:ITournament[]=[]
+  public _selectedTournaments:ITournament=null
 
   public _authUser$:Observable<ISignIn>
   
@@ -32,6 +33,10 @@ export class HomeComponent implements OnInit {
 
   setCurrentTab(selected):void{
     this.selectedTab=selected;
+    this._selectedTournaments=null;
+  }
+  setSelectedTOurnament(tournamentSelected:ITournament):void{
+    this._selectedTournaments=tournamentSelected;
   }
 
 }

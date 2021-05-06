@@ -11,10 +11,16 @@
 #tournament-details li{
     margin: 5px;
 }
+#tournament-details li span{
+    font-weight: bold;
+}
 #tournament-details li:first-child{
     font-weight: bold;
     text-decoration: underline;
     font-size: 15px;
+}
+#tournament-details li:first-child:hover{
+    cursor: pointer;
 }
 
 #tournament-card-actions{
