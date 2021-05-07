@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { RouterModule } from '@angular/router';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { RouterModule } from '@angular/router';
     MatDividerModule,
     MatFormFieldModule,
     MatInputModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule,
   ],
   exports:[
     MatButtonModule,
@@ -41,8 +43,9 @@ import { RouterModule } from '@angular/router';
     MatFormFieldModule,
     MatInputModule,
     HttpClientModule,
-
-    NavBarComponent
+    MatSnackBarModule,
+    NavBarComponent,
+    CommonModule
   ]
 })
 export class SharedModule { }

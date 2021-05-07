@@ -7,6 +7,8 @@ import {  ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './Components/Login/login.component';
 import { SharedModule } from '../shared/shared.module';
 import { RegisterComponent } from './Components/register/register.component';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthenticationEffect } from './state/authentication.effects';
 
 
 
@@ -18,9 +20,10 @@ import { RegisterComponent } from './Components/register/register.component';
   ],
   imports: [
     AppRoutingModule,
+    SharedModule,
     StoreModule.forFeature("authentication",reducer),
+    EffectsModule.forFeature([AuthenticationEffect]),
     ReactiveFormsModule,
-    SharedModule
   ]
 })
 

@@ -11,11 +11,15 @@ export interface State extends fromRoot.State{
 }
 
 export interface AuthState{
-    AuthUser:ISignIn
+    AuthUser:ISignIn,
+    errorMessage:string,
+    authenticationIsInProcess:boolean
 }
 
 const initialState:AuthState={
-    AuthUser:null ||  JSON.parse(localStorage.getItem('auth_user'))
+    AuthUser:null ||  JSON.parse(localStorage.getItem('auth_user')),
+    errorMessage:null,
+    authenticationIsInProcess:false
 }
 
 
@@ -26,17 +30,38 @@ export const getAuthUser=createSelector(
     getAuthFutureState,
     state=>state.AuthUser
 )
+export const getAuthErrorMessage=createSelector(
+    getAuthFutureState,
+    state=>state.errorMessage
+)
+export const getAuthenticationState=createSelector(
+    getAuthFutureState,
+    state=>state.authenticationIsInProcess
+)
 
 
 
 export function reducer(state=initialState,action:AuthenticationActions):AuthState{
     switch (action.type) {
-        case AuthenticationActionTypes.SetUser:
-            //TODO - setup user to the localstorage
-            localStorage.setItem("auth_user",JSON.stringify(action.payload))
+        case AuthenticationActionTypes.Login:
             return {
                 ...state,
-                AuthUser:action.payload
+                errorMessage:null,
+                authenticationIsInProcess:true
+            }
+        case AuthenticationActionTypes.LoginSuccess:
+            return {
+                ...state,
+                errorMessage:null,
+                AuthUser:action.payload,
+                authenticationIsInProcess:false
+            }
+        case AuthenticationActionTypes.LoginFailiure:
+            return {
+                ...state,
+                AuthUser:null,
+                errorMessage:"Please enter valid information",
+                authenticationIsInProcess:false
             }
         default:
             return state;

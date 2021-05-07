@@ -30,7 +30,6 @@ export class TournamentEffects {
     map((action:fromTournamentActions.LoadSelectedTournament)=>action.payload),
     mergeMap((tournamentId:string)=>
       this.tournamentService.GetTournamentById(tournamentId).pipe(
-        tap(data=>console.log(data)),
         map((tournament:ITournament)=>(new fromTournamentActions.LoadSelectedTournamentSuccess(tournament))),
         catchError(err=>of(new fromTournamentActions.LoadSelectedTournamentFailiure(err)))
       )

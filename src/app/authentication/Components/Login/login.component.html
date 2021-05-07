@@ -36,7 +36,9 @@
                         </div>
                         
                         <div class="example-container">
-                            <button [disabled]="authForm.invalid" type="submit" id="submit-button" mat-flat-button color="basic">Login</button>
+                            <button [disabled]="authForm.invalid || authState" type="submit" id="submit-button" mat-flat-button color="basic">
+                              Login
+                            </button>
                         </div>
                     </form>
                     <div id="createAccount">
