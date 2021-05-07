@@ -12,6 +12,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { TournamentEffects } from './state/tournament.effects';
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './state/reducer';
+import { AppRoutingModule } from './tournaments-routing.module';
+import { AuthenticationModule } from '../authentication/authentication.module';
 
 
 
@@ -28,11 +30,12 @@ import { reducer } from './state/reducer';
   ],
   imports: [
     CommonModule,
-
     SharedModule,
+    AuthenticationModule,
+    AppRoutingModule,
     StoreModule.forFeature("tournaments",reducer),
     EffectsModule.forFeature([TournamentEffects]), 
   ],
-  exports:[TournamentsComponent,TournamentDetailComponent]
+  exports:[TournamentsComponent]
 })
 export class TournamentsModule { }

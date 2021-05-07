@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NavBarComponent } from './Components/nav-bar/nav-bar.component';
+import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
 
 import { BiddingsComponent } from './Components/biddings/biddings.component';
 
@@ -26,8 +26,6 @@ import { EffectsModule } from '@ngrx/effects';
 @NgModule({
   declarations: [
     AppComponent,
-    NavBarComponent,
-
     BiddingsComponent,
 
 
@@ -35,9 +33,9 @@ import { EffectsModule } from '@ngrx/effects';
 
   ],
   imports: [
+    SharedModule,
     AuthenticationModule,
     TournamentsModule,
-    SharedModule,
 
     AppRoutingModule,
 

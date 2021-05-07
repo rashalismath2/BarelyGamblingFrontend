@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
-import { filter, map, mergeMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { catchError, filter, map, mergeMap, tap } from 'rxjs/operators';
 import { ITournament } from 'src/app/Entities/ITournament';
 import { TournamentsService } from '../services/tournaments.service';
 
@@ -23,5 +24,18 @@ export class TournamentEffects {
       )
     )
   )
+  @Effect()
+  loadSelectedTournament$=this.actions$.pipe(
+    ofType(fromTournamentActions.TournamentActionsTypes.LoadSelectedTournament),
+    map((action:fromTournamentActions.LoadSelectedTournament)=>action.payload),
+    mergeMap((tournamentId:string)=>
+      this.tournamentService.GetTournamentById(tournamentId).pipe(
+        tap(data=>console.log(data)),
+        map((tournament:ITournament)=>(new fromTournamentActions.LoadSelectedTournamentSuccess(tournament))),
+        catchError(err=>of(new fromTournamentActions.LoadSelectedTournamentFailiure(err)))
+      )
+    )
+  )
+
 
 }

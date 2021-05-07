@@ -9,12 +9,17 @@ import { MatDividerModule } from '@angular/material/divider';
 import { HttpClientModule } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    NavBarComponent
+  ],
   imports: [
     CommonModule,
+    RouterModule.forChild([]),
 
     MatButtonModule,
     MatSidenavModule,
@@ -35,7 +40,9 @@ import { MatFormFieldModule } from "@angular/material/form-field";
     MatDividerModule,
     MatFormFieldModule,
     MatInputModule,
-    HttpClientModule
+    HttpClientModule,
+
+    NavBarComponent
   ]
 })
 export class SharedModule { }

@@ -17,9 +17,8 @@
     </mat-drawer>
     <mat-drawer-content class="pt-4">
         <section class="container-fluid">
-           <app-tournaments (selectedTournament)='setSelectedTOurnament($event)'   *ngIf='_selectedTournaments==null && selectedTab=="tournaments"'> </app-tournaments>
-           <app-tournament-detail [_tournament]="_selectedTournaments"   *ngIf='_selectedTournaments && selectedTab=="tournaments"'> </app-tournament-detail>
-           <app-biddings *ngIf='_selectedTournaments==null && selectedTab=="biddings"'></app-biddings>
+           <app-tournaments (selectedTournament)='setSelectedTOurnament($event)'   *ngIf='selectedTab=="tournaments"'> </app-tournaments>
+           <app-biddings *ngIf='selectedTab=="biddings"'></app-biddings>
         </section>
     </mat-drawer-content>
 </mat-drawer-container>

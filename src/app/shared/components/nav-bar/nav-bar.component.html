@@ -1,6 +1,6 @@
 <nav class="navbar navbar-light ">
     <div class="container-fluid">
-        <span class="navbar-brand mb-0 h1">BarelyGambling</span>
+        <span [routerLink]="[ '/']" class="navbar-brand mb-0 h1">BarelyGambling</span>
         
         <div class="d-flex">
             <div *ngIf='authUser; else showLogin'>

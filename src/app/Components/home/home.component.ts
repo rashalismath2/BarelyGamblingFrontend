@@ -5,6 +5,7 @@ import * as fromAuth from 'src/app/authentication/state/reducer';
 import { ITournament } from 'src/app/Entities/ITournament';
 import { ISignIn } from 'src/app/Entities/ISignIn';
 import { Observable } from 'rxjs/Observable'
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,13 +15,17 @@ import { Observable } from 'rxjs/Observable'
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private _authenticactionStore:Store<fromAuth.AuthState>) {
+  constructor(
+    private _authenticactionStore:Store<fromAuth.AuthState>,
+    private router:Router
+  ) 
+  {
    
-   }
+  }
 
   public selectedTab:string="tournaments"
   public _tournaments:ITournament[]=[]
-  public _selectedTournaments:ITournament=null
+
 
   public _authUser$:Observable<ISignIn>
   
@@ -33,10 +38,10 @@ export class HomeComponent implements OnInit {
 
   setCurrentTab(selected):void{
     this.selectedTab=selected;
-    this._selectedTournaments=null;
+
   }
   setSelectedTOurnament(tournamentSelected:ITournament):void{
-    this._selectedTournaments=tournamentSelected;
+    this.router.navigate(["tournaments",tournamentSelected.id]);
   }
 
 }

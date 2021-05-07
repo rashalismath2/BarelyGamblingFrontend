@@ -1,4 +1,8 @@
-<mat-card class="example-card">
+<section id="app-nav-bar">
+    <app-nav-bar [authUser]='_authUser$ | async '></app-nav-bar>
+</section>
+
+<mat-card class="example-card" *ngIf="_tournament$ | async as _tournament; else noTournamentFound">
     <app-tournament-banner [teams]='_tournament.teams'></app-tournament-banner>
     <mat-card-content>
      <ul class="tournament-details-list">
@@ -37,3 +41,9 @@
 
     </mat-card-content>
 </mat-card>
+
+<ng-template #noTournamentFound>
+    <div>
+        <p class="emptyMessage">No tournament found!</p>
+    </div>
+</ng-template>
