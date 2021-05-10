@@ -1,10 +1,10 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { ITournament } from "src/app/Entities/ITournament";
+import { ITournament } from "../../root/Entities/ITournament";
 import { TournamentActions, TournamentActionsTypes } from "./tournaments.actions";
 
 
 
-import * as fromRoot from "../../state/app.state"
+import * as fromRoot from "../../root/state/app.state"
 
 export interface State extends fromRoot.State{
     tournaments:TournamentsState
@@ -18,7 +18,7 @@ export interface TournamentsState{
 }
 
 const initialState:TournamentsState={
-    tournaments:[],
+    tournaments:null,
     loadFailiureMessage:null,
     selectedTournamentId:null
 }
@@ -39,7 +39,8 @@ export const getSelectedTournamentId=createSelector(
 export const getSelectedTournament=createSelector(
     getTournamentFutureState,
     getSelectedTournamentId,
-    (state,selectedTournamentId)=>state.tournaments.find(tournament=>tournament.id==selectedTournamentId)
+    (state,selectedTournamentId)=>
+    state.tournaments?state.tournaments.find(tournament=>tournament.id==selectedTournamentId):null
 )
 
 
@@ -57,7 +58,7 @@ export function reducer(state=initialState,action:TournamentActions):Tournaments
             case TournamentActionsTypes.LoadFailiure: 
                 return {
                     ...state,
-                    tournaments:[],
+                    tournaments:null,
                     loadFailiureMessage:action.payload,
                     selectedTournamentId:null
                 }
@@ -67,11 +68,16 @@ export function reducer(state=initialState,action:TournamentActions):Tournaments
                     selectedTournamentId:action.payload
                 }
             case TournamentActionsTypes.LoadSelectedTournamentSuccess:
-                if(state.tournaments.length==0){
+                if(state.tournaments==null || state.tournaments.length==0){
+                    //set current tournament has all the data
+                    var payload={
+                        ...action.payload,
+                        allTheData:true
+                    }
                     return {
                         ...state,
                         loadFailiureMessage:null,
-                        tournaments:[...state.tournaments,action.payload]
+                        tournaments:[payload]
                     }
                 } 
                 return {

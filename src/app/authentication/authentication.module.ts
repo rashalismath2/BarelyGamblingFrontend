@@ -9,6 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 import { RegisterComponent } from './Components/register/register.component';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthenticationEffect } from './state/authentication.effects';
+import { AuthenticationService } from './services/authentication.service';
 
 
 
@@ -24,7 +25,8 @@ import { AuthenticationEffect } from './state/authentication.effects';
     StoreModule.forFeature("authentication",reducer),
     EffectsModule.forFeature([AuthenticationEffect]),
     ReactiveFormsModule,
-  ]
+  ],
+  providers:[AuthenticationService]
 })
 
 export class AuthenticationModule {

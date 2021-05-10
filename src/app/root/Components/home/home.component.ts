@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { tap } from 'rxjs/operators';
 import * as fromAuth from 'src/app/authentication/state/reducer';
-import { ITournament } from 'src/app/Entities/ITournament';
-import { ISignIn } from 'src/app/Entities/ISignIn';
+import { ITournament } from '../../Entities/ITournament';
+import { ILoginDto } from '../../Entities/ILoginDto';
 import { Observable } from 'rxjs/Observable'
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,7 @@ export class HomeComponent implements OnInit {
 
   selectedTab: string = "tournaments"
   _tournaments: ITournament[] = []
-  _authUser$: Observable<ISignIn>
+  _authUser$: Observable<ILoginDto>
 
   constructor(
     private _authenticactionStore: Store<fromAuth.AuthState>,
@@ -33,6 +34,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
+   
     this.route.queryParams
       .subscribe(params => {
         if (params.loginSuccess) {

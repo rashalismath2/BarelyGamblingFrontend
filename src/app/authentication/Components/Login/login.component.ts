@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { ActivatedRoute, Params } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { takeWhile } from 'rxjs/operators';
-import { Auth } from 'src/app/Entities/Auth';
+import { Auth } from '../../../root/Entities/Auth';
 import * as fromActions from '../../state/authentication.actions';
 import * as fromAuthState from '../../state/reducer';
 
@@ -24,12 +25,23 @@ export class LoginComponent implements OnInit,OnDestroy {
   constructor(
         private formBuilder:FormBuilder,
         private authenticationState:Store<fromAuthState.AuthState>,
-        private _snackBar: MatSnackBar
+        private _snackBar: MatSnackBar,
+        private route:ActivatedRoute
       ) { }
 
 
 
   ngOnInit(): void {
+
+    this.route.params.subscribe((params:Params)=>{
+        if(params.message){
+          this._snackBar.open(params.message, "Close",{
+            duration: 3 * 1000,
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+        }
+    })
 
     this.authenticationState.pipe(
       select(fromAuthState.getAuthErrorMessage),

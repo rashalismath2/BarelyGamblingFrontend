@@ -1,4 +1,4 @@
-export interface IAuth{
+export interface ISignInInput{
     email:string;
     password:string;
 }

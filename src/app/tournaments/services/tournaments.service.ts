@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ITournament } from 'src/app/Entities/ITournament';
+import { ITournament } from '../../root/Entities/ITournament';
 import { environment } from 'src/environments/environment';
 
 
@@ -17,22 +17,14 @@ export class TournamentsService {
   constructor(private http:HttpClient) { }
 
   retrieveAllTournaments():Observable<ITournament[]>{
-    return this.http.get<ITournament[]>(this._url,{
-      headers:{
-        "Accept":"application/json"
-      }
-    })
+    return this.http.get<ITournament[]>(this._url)
     .pipe(
       catchError(this.handleError)
     )
   }
 
   GetTournamentById(id:string):Observable<ITournament>{
-    return this.http.get<ITournament>(this._url+`/${id}`,{
-      headers:{
-        "Accept":"application/json"
-      }
-    })
+    return this.http.get<ITournament>(this._url+`/${id}`)
     .pipe(
       catchError(this.handleError)
     )

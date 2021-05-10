@@ -1,8 +1,8 @@
-import { IAuth } from "./IAuth";
+import { ISignInInput } from "./ISignInInput";
 import { ITournament } from "./ITournament";
 
 
-export interface IUser extends IAuth{
+export interface IUser extends ISignInInput{
     id:string;
     firstName:string;
     lastName:string;

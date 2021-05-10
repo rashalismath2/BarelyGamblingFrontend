@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ISignIn } from 'src/app/Entities/ISignIn';
+import { ILoginDto } from '../../../root/Entities/ILoginDto';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,7 +8,7 @@ import { ISignIn } from 'src/app/Entities/ISignIn';
 })
 export class NavBarComponent implements OnInit {
 
-  @Input() authUser:ISignIn
+  @Input() authUser:ILoginDto
 
   constructor() { }
 

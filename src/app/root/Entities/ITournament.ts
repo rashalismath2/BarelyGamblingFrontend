@@ -15,5 +15,5 @@ export interface ITournament{
     user:IUser;
     hasEnded:boolean;
     hasStarted:boolean;
-
+    allTheData:boolean
 }

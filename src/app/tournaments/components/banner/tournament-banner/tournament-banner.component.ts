@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ITeam } from 'src/app/Entities/ITeam';
+import { ITeam } from '../../../../root/Entities/ITeam';
 
 @Component({
   selector: 'app-tournament-banner',

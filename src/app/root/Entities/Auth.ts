@@ -1,7 +1,7 @@
-import { IAuth } from "./IAuth";
+import { ISignInInput } from "./ISignInInput";
 
 
-export class Auth implements IAuth{
+export class Auth implements ISignInInput{
     email: string;
     password: string;
 

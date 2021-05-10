@@ -1,8 +1,8 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { ISignIn } from "src/app/Entities/ISignIn";
+import { ILoginDto } from "../../root/Entities/ILoginDto";
 
 
-import * as fromRoot from "../../state/app.state"
+import * as fromRoot from "../../root/state/app.state"
 
 import { AuthenticationActions, AuthenticationActionTypes } from "./authentication.actions";
 
@@ -11,7 +11,7 @@ export interface State extends fromRoot.State{
 }
 
 export interface AuthState{
-    AuthUser:ISignIn,
+    AuthUser:ILoginDto,
     errorMessage:string,
     authenticationIsInProcess:boolean
 }
@@ -60,6 +60,24 @@ export function reducer(state=initialState,action:AuthenticationActions):AuthSta
             return {
                 ...state,
                 AuthUser:null,
+                errorMessage:"Please enter valid information",
+                authenticationIsInProcess:false
+            }
+
+        case AuthenticationActionTypes.Signup:
+            return {
+                ...state,
+                errorMessage:null,
+                authenticationIsInProcess:true
+            }
+        case AuthenticationActionTypes.SignupSuccess:
+            return {
+                ...state,
+                authenticationIsInProcess:false
+            }
+        case AuthenticationActionTypes.LoginFailiure:
+            return {
+                ...state,
                 errorMessage:"Please enter valid information",
                 authenticationIsInProcess:false
             }

@@ -1,7 +1,7 @@
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { ITournament } from 'src/app/Entities/ITournament';
+import { ITournament } from '../../../root/Entities/ITournament';
 
 
 @Component({
