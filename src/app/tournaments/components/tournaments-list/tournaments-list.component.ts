@@ -1,17 +1,16 @@
-import { OnDestroy } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { takeWhile } from 'rxjs/operators';
-import { ITournament } from '../../../root/Entities/ITournament';
+import { ITournament } from 'src/app/root/Entities/ITournament';
 import * as fromTournamentReducer from '../../state/reducer';
 
-@Component({
-  selector: 'app-tournaments',
-  templateUrl: './tournaments.component.html',
-  styleUrls: ['./tournaments.component.scss']
-})
-export class TournamentsComponent implements OnInit,OnDestroy {
 
+@Component({
+  selector: 'app-tournaments-list',
+  templateUrl: './tournaments-list.component.html',
+  styleUrls: ['./tournaments-list.component.scss']
+})
+export class TournamentsListComponent implements OnInit,OnDestroy{
   _tournaments:ITournament[]
   _fetchingTournamentsComplete:boolean
   componentActive: boolean;
@@ -39,8 +38,4 @@ export class TournamentsComponent implements OnInit,OnDestroy {
   ngOnDestroy(): void {
     this.componentActive=false
   }
-
 }
-
-
-

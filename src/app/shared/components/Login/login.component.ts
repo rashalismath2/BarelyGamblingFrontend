@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit,OnDestroy {
 
   constructor(
         private formBuilder:FormBuilder,
-        private authenticationState:Store<fromAuthState.AuthState>,
+        private authenticationState:Store<fromAuthState.SharedState>,
         private _snackBar: MatSnackBar,
         private route:ActivatedRoute
       ) { }

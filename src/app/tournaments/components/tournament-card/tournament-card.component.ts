@@ -12,13 +12,9 @@ import { ITournament } from '../../../root/Entities/ITournament';
 export class TournamentCardComponent implements OnInit {
 
   @Input() _tournament:ITournament;
-  @Output() selectedTournament:EventEmitter<ITournament>=new EventEmitter<ITournament>()
 
-  
   ngOnInit(): void {
 
   }
-  getSelectedTournament(tournament){
-    this.selectedTournament.emit(tournament)
-  }
+
 }

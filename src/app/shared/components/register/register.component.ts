@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { SignupInput } from '../../../root/Entities/SignupInput';
 
 import * as fromAuthActions from "../../state/authentication.actions"
-import { AuthState } from '../../state/reducer';
+import { SharedState } from '../../state/reducer';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
   authForm:FormGroup;
   imgURL: any;
 
-  constructor(private formBuilder:FormBuilder,private authState:Store<AuthState>) { }
+  constructor(private formBuilder:FormBuilder,private authState:Store<SharedState>) { }
 
  
   setImage(files) {

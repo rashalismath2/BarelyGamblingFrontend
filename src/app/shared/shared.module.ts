@@ -10,17 +10,26 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
-import { RouterModule } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HomeComponent } from './components/home/home.component';
+import { StoreModule } from '@ngrx/store';
+import { reducer } from './state/reducer';
+import { AppRoutingModule } from './shared-routing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RegisterComponent } from './Components/register/register.component';
+import { LoginComponent } from './Components/Login/login.component';
 
 
 @NgModule({
   declarations: [
-    NavBarComponent
+    NavBarComponent,
+    HomeComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
+    ReactiveFormsModule,
     CommonModule,
-    RouterModule.forChild([]),
 
     MatButtonModule,
     MatSidenavModule,
@@ -32,6 +41,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatInputModule,
     HttpClientModule,
     MatSnackBarModule,
+    StoreModule.forFeature("shared",reducer),
+    AppRoutingModule,
   ],
   exports:[
     MatButtonModule,
@@ -45,7 +56,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HttpClientModule,
     MatSnackBarModule,
     NavBarComponent,
-    CommonModule
+    CommonModule,
+    HomeComponent
   ]
 })
 export class SharedModule { }

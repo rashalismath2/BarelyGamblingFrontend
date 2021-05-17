@@ -32,7 +32,7 @@ export class TournamentsService {
   
   private handleError(error:HttpErrorResponse) {
     let errorMessage=""
-
+    console.log(error)
     if(error.error instanceof ErrorEvent){
       errorMessage=error.error.message
     }

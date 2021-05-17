@@ -1,5 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
@@ -10,7 +8,7 @@ import { TournamentsService } from '../../services/tournaments.service';
 import * as fromTournamentReducer from '../../state/reducer';
 import { LoadSelectedTournament, SetSelectedTournamentId } from '../../state/tournaments.actions';
 
-import * as fromAuth from 'src/app/authentication/state/reducer';
+import * as fromAuth from 'src/app/shared/state/reducer';
 
 @Component({
   selector: 'app-tournament-detail',
@@ -21,9 +19,8 @@ export class TournamentDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private _tournamentService: TournamentsService,
     private tournamentStore: Store<fromTournamentReducer.TournamentsState>,
-    private _authenticactionStore: Store<fromAuth.AuthState>,
+    private _authenticactionStore: Store<fromAuth.SharedState>,
   ) { }
 
   _tournament$: Observable<ITournament>;

@@ -13,9 +13,8 @@ import { TournamentEffects } from './state/tournament.effects';
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './state/reducer';
 import { AppRoutingModule } from './tournaments-routing.module';
-import { AuthenticationModule } from '../authentication/authentication.module';
-
-
+import { TournamentsResolverService } from './services/tournaments-resolver.service';
+import { TournamentsListComponent } from './components/tournaments-list/tournaments-list.component';
 
 
 @NgModule({
@@ -27,11 +26,14 @@ import { AuthenticationModule } from '../authentication/authentication.module';
 
     GetTeamShortnamePipe,
     GetCurrencyPipe,
+    TournamentsListComponent,
+  ],
+  providers:[
+    TournamentsResolverService
   ],
   imports: [
     CommonModule,
     SharedModule,
-    AuthenticationModule,
     AppRoutingModule,
     StoreModule.forFeature("tournaments",reducer),
     EffectsModule.forFeature([TournamentEffects]), 

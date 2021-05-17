@@ -1,49 +1,64 @@
-<section id="app-nav-bar">
-    <app-nav-bar [authUser]='_authUser$ | async '></app-nav-bar>
-</section>
+<app-home>
+    <div class="home-components">
+        <mat-card class="example-card" *ngIf="_tournament$ | async as _tournament; else noTournamentFound">
+            <app-tournament-banner [teams]='_tournament.teams'></app-tournament-banner>
+            <mat-card-content>
+                <ul class="tournament-details-list">
+                    <li>{{_tournament.title}}</li>
+                    <li>
+                        <span class="">On -</span>
+                        {{_tournament.startingDate  | date:'fullDate'}}</li>
+                    <li>
+                        <span>@ -</span>
+                        {{_tournament.place}}</li>
+                    <li>
+                        <span>Grand price of -
+                        </span>
+                        {{_tournament.tournamentPrize | getCurrency}}</li>
+                    <li>{{_tournament.description }}</li>
+                </ul>
 
-<mat-card class="example-card" *ngIf="_tournament$ | async as _tournament; else noTournamentFound">
-    <app-tournament-banner [teams]='_tournament.teams'></app-tournament-banner>
-    <mat-card-content>
-     <ul class="tournament-details-list">
-         <li>{{_tournament.title}}</li>
-         <li><span class="">On -</span> {{_tournament.startingDate  | date:'fullDate'}}</li>
-         <li><span>@ -</span> {{_tournament.place}}</li>
-         <li><span>Grand price of - </span> {{_tournament.tournamentPrize | getCurrency}}</li>
-         <li>{{_tournament.description }}</li>
-     </ul>
-     
-     <div class="tournament-details-hr" ></div>
-    
-     <div id="tournament-details-teams-container">
-        <ul  *ngFor="let team of _tournament.teams">
-            <li class="tournament-details-teams-title">
-                <p *ngIf="team.won" class="tournament-team-won bg-success">Champions</p>
-                <span>{{team.title}} ({{team.title | getTeamShortnamePipe}})</span>
-            </li>
-            <li class=""><span>Has raised</span> {{team.total | getCurrency}}</li>
-            <li><span>Team - </span></li>
-            <ul class="tournament-team-memebers" *ngFor="let member of team.teamMembers">
-                <li>
-                    <mat-card class="example-card">
-                        <mat-card-header>
-                            <div mat-card-avatar="mat-card-avatar" class="example-header-image">
-                                <img class="tournament-card-user-avatar" src={{member.user.coverUrl}}/>
-                            </div>
-                          <mat-card-title>{{member.user.firstName}} {{member.user.lastName}}</mat-card-title>
-                          <mat-card-subtitle>{{member.playerType==1?'Captain':'Member'}}</mat-card-subtitle>
-                        </mat-card-header>
-                      </mat-card>
-                </li>
-            </ul>
-        </ul>
-     </div>
+                <div class="tournament-details-hr"></div>
 
-    </mat-card-content>
-</mat-card>
+                <div id="tournament-details-teams-container">
+                    <ul *ngFor="let team of _tournament.teams">
+                        <li class="tournament-details-teams-title">
+                            <p *ngIf="team.won" class="tournament-team-won bg-success">Champions</p>
+                            <span>{{team.title}}
+                                ({{team.title | getTeamShortnamePipe}})</span>
+                        </li>
+                        <li class="">
+                            <span>Has raised</span>
+                            {{team.total | getCurrency}}</li>
+                        <li>
+                            <span>Team -
+                            </span>
+                        </li>
+                        <ul class="tournament-team-memebers" *ngFor="let member of team.teamMembers">
+                            <li>
+                                <mat-card class="example-card">
+                                    <mat-card-header>
+                                        <div mat-card-avatar="mat-card-avatar" class="example-header-image">
+                                            <img class="tournament-card-user-avatar" src={{member.user.coverUrl}}/>
+                                        </div>
+                                        <mat-card-title>{{member.user.firstName}}
+                                            {{member.user.lastName}}</mat-card-title>
+                                        <mat-card-subtitle>{{member.playerType==1?'Captain':'Member'}}</mat-card-subtitle>
+                                    </mat-card-header>
+                                </mat-card>
+                            </li>
+                        </ul>
+                    </ul>
+                </div>
 
-<ng-template #noTournamentFound>
-    <div>
-        <p class="emptyMessage">No tournament found!</p>
+            </mat-card-content>
+        </mat-card>
+
+        <ng-template #noTournamentFound>
+            <div>
+                <p class="emptyMessage">No tournament found!</p>
+            </div>
+        </ng-template>
+        
     </div>
-</ng-template>
+</app-home>

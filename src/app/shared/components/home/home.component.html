@@ -4,12 +4,15 @@
 <mat-drawer-container id="app-drawer-container" class="example-container">
     <mat-drawer class="pt-4" id="side-drawer" mode="side" opened="opened">
         <section class="container-fluid">
-            <a (click)="setCurrentTab('tournaments')"  
+            <a  
+                [routerLink]="[ '/tournaments']"  
                 class="drawer-buttons" mat-stroked-button color="primary">
                 <mat-icon  class="drawer-button-icons">space_dashboard</mat-icon>
                 Tournaments
             </a>
-            <a (click)="setCurrentTab('biddings')"  class="drawer-buttons"  mat-stroked-button color="primary">
+            <a  
+                [routerLink]="[ '/biddings']"  
+                class="drawer-buttons"  mat-stroked-button color="primary">
                 <mat-icon class="drawer-button-icons">leaderboard</mat-icon>
                 Biddings
             </a>
@@ -17,8 +20,7 @@
     </mat-drawer>
     <mat-drawer-content class="pt-4">
         <section class="container-fluid">
-           <app-tournaments (selectedTournament)='setSelectedTOurnament($event)'   *ngIf='selectedTab=="tournaments"'> </app-tournaments>
-           <app-biddings *ngIf='selectedTab=="biddings"'></app-biddings>
+            <ng-content selector=".home-components"></ng-content>
         </section>
     </mat-drawer-content>
 </mat-drawer-container>

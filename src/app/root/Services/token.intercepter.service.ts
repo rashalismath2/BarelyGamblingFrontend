@@ -2,8 +2,9 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthenticationService } from '../../authentication/services/authentication.service';
+
 import 'rxjs/add/operator/do';
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 
 
 @Injectable()
