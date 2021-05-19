@@ -33,13 +33,9 @@ export class LoginComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
 
-    this.route.params.subscribe((params:Params)=>{
-        if(params.message){
-          this._snackBar.open(params.message, "Close",{
-            duration: 3 * 1000,
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-          });
+    this.route.queryParams.subscribe((params:Params)=>{
+        if(params.signupSuccess){
+          this.openSnackBar(params.signupSuccess)
         }
     })
 
@@ -49,11 +45,7 @@ export class LoginComponent implements OnInit,OnDestroy {
       )
     .subscribe(message=>{
       if(message!=null){
-        this._snackBar.open(message, "Close",{
-          duration: 3 * 1000,
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-        });
+        this.openSnackBar(message)
       }
     })
 
@@ -71,6 +63,14 @@ export class LoginComponent implements OnInit,OnDestroy {
      
   }
 
+  openSnackBar(message:string){
+    this._snackBar.open(message, "Close",{
+      duration: 3 * 1000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
+  }
+  
   onSubmit(logingDetails:FormGroup){
     if(logingDetails.valid){
       var auth=new Auth(

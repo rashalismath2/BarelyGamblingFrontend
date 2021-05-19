@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -9,13 +12,11 @@ import { MatDividerModule } from '@angular/material/divider';
 import { HttpClientModule } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatMenuModule} from '@angular/material/menu';
+
 import { HomeComponent } from './components/home/home.component';
-
-import { ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { RouterModule } from '@angular/router';
     RouterModule.forChild([]),
     ReactiveFormsModule,
     MatButtonModule,
+    MatMenuModule,
     MatSidenavModule,
     MatIconModule,
     MatCardModule,

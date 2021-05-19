@@ -11,6 +11,9 @@ export enum AuthenticationActionTypes{
     Signup="[authentications] Signup",
     SignupSuccess="[authentications] SignupSuccess",
     SignupFailiure="[authentications] SignupFailiure",
+
+    Logout="[authentication] Logout",
+    LogoutSuccess="[authentication] Logout success",
 }
 
 
@@ -40,10 +43,21 @@ export class SignupFailiure implements Action{
     constructor(public payload:string) {  }
 }
 
+export class Logout implements Action{
+    readonly type=AuthenticationActionTypes.Logout;
+    constructor() {  }
+}
+export class LogoutSuccess implements Action{
+    readonly type=AuthenticationActionTypes.LogoutSuccess;
+    constructor() {  }
+}
+
 export type AuthenticationActions=Login
                             |LoginSuccess
                             |LoginFailiure
                             |Signup
                             |SignupSuccess
                             |SignupFailiure
+                            |Logout
+                            |LogoutSuccess
                             ;

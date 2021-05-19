@@ -1,5 +1,7 @@
 import { OnDestroy } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { ActivatedRoute, Params } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { takeWhile } from 'rxjs/operators';
 import { ITournament } from '../../../core/Entities/ITournament';
@@ -16,13 +18,28 @@ export class TournamentsComponent implements OnInit,OnDestroy {
   _fetchingTournamentsComplete:boolean
   componentActive: boolean;
 
-  constructor(private tournamentStore:Store<fromTournamentReducer.State>) { 
-  }
+  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+
+  constructor(
+    private route:ActivatedRoute,
+    private _snackBar: MatSnackBar,
+    private tournamentStore:Store<fromTournamentReducer.State>) 
+  { }
 
   ngOnInit(): void {
     this.componentActive=true
     this._fetchingTournamentsComplete=false
 
+    this.route.queryParams
+      .pipe(
+        takeWhile(()=>this.componentActive)
+      )
+      .subscribe((params:Params)=>{
+        if(params.loginSuccess || params.logoutSuccess){
+          this.openSnackBar(params.loginSuccess || params.logoutSuccess)
+        }
+    })
     
     this.tournamentStore
     .pipe(select(fromTournamentReducer.getTournaments),
@@ -35,6 +52,15 @@ export class TournamentsComponent implements OnInit,OnDestroy {
     })
 
   }
+
+  openSnackBar(message:string){
+    this._snackBar.open(message, "Close",{
+      duration: 3 * 1000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
+  }
+  
 
   ngOnDestroy(): void {
     this.componentActive=false

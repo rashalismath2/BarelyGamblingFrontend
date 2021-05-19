@@ -45,31 +45,25 @@ export class AuthenticationService{
     
       
     signIn(user:ISignInInput):Observable<ILoginDto>{
-        const httpOptions = {
-            headers: new HttpHeaders({
-              'Content-Type':  'application/json',
-              "Accept":  'application/json'
-            })
-          };
-     
-        return this.http.post<ILoginDto>(this.signInUrl, user, httpOptions)
+        return this.http.post<ILoginDto>(this.signInUrl, user)
     }
+
 
     signUp(formInputs:ISignUpInput):Observable<IUser>{
         const httpOptions = {
             headers: new HttpHeaders({
-              'enctype':  'multipart/form-data',
-              "Accept":  'application/json'
+              "Accept":  'application/json',
+              "Content-Type": "multipart/form-data"
             })
           };
 
           var formData = new FormData();
-          formData.append("email", formInputs.email);
-          formData.append("password", formInputs.password);
-          formData.append("firstName", formInputs.firstName);
-          formData.append("lastName", formInputs.lastName);
-          formData.append("profilePicture", formInputs.profilePicture);
+          formData.append("Email", formInputs.email);
+          formData.append("Password", formInputs.password);
+          formData.append("FirstName", formInputs.firstName);
+          formData.append("LastName", formInputs.lastName);
+          formData.append("ProfilePicture", formInputs.profilePicture);
      
-        return this.http.post<IUser>(this.signUpUrl, formData, httpOptions)
+        return this.http.post<IUser>(this.signUpUrl, formData)
     }
 }

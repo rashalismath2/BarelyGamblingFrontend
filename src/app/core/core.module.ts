@@ -1,13 +1,15 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { throwIfAlreadyLoaded } from './guards/import.guard';
 import { StoreModule } from '@ngrx/store';
-import { CoreRoutingModule } from './core-routing';
+import { EffectsModule } from '@ngrx/effects';
 
+import { throwIfAlreadyLoaded } from './guards/import.guard';
+import { CoreRoutingModule } from './core-routing';
 import {reducer} from "./state/reducer"
 import { SharedModule } from '../shared/shared.module';
 import { RegisterComponent } from './Components/register/register.component';
 import { LoginComponent } from './components/Login/login.component';
+import {AuthenticationEffect} from "./state/authentication.effects"
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { LoginComponent } from './components/Login/login.component';
     SharedModule,
     CoreRoutingModule,
     StoreModule.forFeature("core",reducer),
+    EffectsModule.forFeature([AuthenticationEffect]), 
   ]
 })
 export class CoreModule {

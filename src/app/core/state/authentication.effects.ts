@@ -59,8 +59,27 @@ export class AuthenticationEffect{
     signupSuccess$: Observable<any> = this.actions$.pipe(
     ofType(fromActions.AuthenticationActionTypes.SignupSuccess),
     tap((user) => {
-        this.router.navigate(["/login"],{queryParams:{loginSuccess:"Signup was successful. Please login to continue"}});
+        this.router.navigate(["/login"],{queryParams:{signupSuccess:"Signup was successful. Please login to continue"}});
     })
     );
+
+    @Effect()
+    logout$:Observable<Action>=this.actions$.pipe(
+        ofType(fromActions.AuthenticationActionTypes.Logout),
+        tap(()=>
+            localStorage.removeItem("auth_user")
+        ),
+        switchMap(()=>{
+            return of(new fromActions.LogoutSuccess())
+        })
+    )
+
+    @Effect({ dispatch: false })
+    logoutSuccess$:Observable<Action>=this.actions$.pipe(
+        ofType(fromActions.AuthenticationActionTypes.LogoutSuccess),
+        tap(()=>{
+            this.router.navigate(["/"],{queryParams:{logoutSuccess:"Signout was successful."}});
+        }),
+    )
 
 }

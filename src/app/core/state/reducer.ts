@@ -14,7 +14,8 @@ export interface CoreState{
    authentication:{
         AuthUser:ILoginDto,
         errorMessage:string,
-        authenticationIsInProcess:boolean
+        authenticationIsInProcess:boolean,
+        logingOutIsOnProcess:boolean,
    }
 }
 
@@ -22,7 +23,8 @@ const initialState:CoreState={
     authentication:{
         AuthUser:null ||  JSON.parse(localStorage.getItem('auth_user')),
         errorMessage:null,
-        authenticationIsInProcess:false
+        authenticationIsInProcess:false,
+        logingOutIsOnProcess:false
     }
 }
 
@@ -41,6 +43,10 @@ export const getAuthErrorMessage=createSelector(
 export const getAuthenticationState=createSelector(
     getAuthFutureState,
     state=>state.authentication.authenticationIsInProcess
+)
+export const getSignOutState=createSelector(
+    getAuthFutureState,
+    state=>state.authentication.logingOutIsOnProcess
 )
 
 
@@ -94,13 +100,30 @@ export function reducer(state=initialState,action:AuthenticationActions):CoreSta
                     authenticationIsInProcess:false
                 }
             }
-        case AuthenticationActionTypes.LoginFailiure:
+        case AuthenticationActionTypes.SignupFailiure:
             return {
                 ...state,
                 authentication:{
                     ...state.authentication,
                     errorMessage:"Please enter valid information",
                     authenticationIsInProcess:false
+                }
+            }
+        case AuthenticationActionTypes.Logout:
+            return {
+                ...state,
+                authentication:{
+                    ...state.authentication,
+                    AuthUser:null,
+                    logingOutIsOnProcess:true
+                }
+            }
+        case AuthenticationActionTypes.LogoutSuccess:
+            return {
+                ...state,
+                authentication:{
+                    ...state.authentication,
+                    logingOutIsOnProcess:false
                 }
             }
         default:

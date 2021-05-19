@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ILoginDto } from '../../../core/Entities/ILoginDto';
 
 @Component({
@@ -9,11 +9,16 @@ import { ILoginDto } from '../../../core/Entities/ILoginDto';
 export class NavBarComponent implements OnInit {
 
   @Input() authUser:ILoginDto
+  @Output() logoutEvent:EventEmitter<boolean>=new EventEmitter<boolean>(); 
 
   constructor() { }
 
   ngOnInit(): void {
 
+  }
+
+  logout(){
+    this.logoutEvent.emit(true)
   }
 
 }

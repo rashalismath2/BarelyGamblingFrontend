@@ -1,22 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { select, Store } from '@ngrx/store';
+import { takeWhile } from 'rxjs/operators';
 import { SignupInput } from '../../../core/Entities/SignupInput';
 
 import * as fromAuthActions from "../../state/authentication.actions"
 import { CoreState } from '../../state/reducer';
+import * as fromAuthState from '../../state/reducer';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit,OnDestroy {
 
   authForm:FormGroup;
   imgURL: any;
 
-  constructor(private formBuilder:FormBuilder,private authState:Store<CoreState>) { }
+  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+  _componentIsActive: boolean=true;
+
+  constructor(
+    private authenticationState:Store<fromAuthState.CoreState>,
+    private _snackBar: MatSnackBar,
+    private formBuilder:FormBuilder,
+    private authState:Store<CoreState>) { }
+
+  ngOnDestroy(): void {
+    this._componentIsActive=false;
+  }
 
  
   setImage(files) {
@@ -44,6 +59,25 @@ export class RegisterComponent implements OnInit {
        lastName:["",[Validators.required,Validators.minLength(3)]],
        profilePicture:[""],
      })
+
+     this.authenticationState.pipe(
+      select(fromAuthState.getAuthErrorMessage),
+      takeWhile(()=>this._componentIsActive)
+      )
+    .subscribe(message=>{
+      if(message!=null){
+        this.openSnackBar(message)
+      }
+    })
+
+  }
+
+  openSnackBar(message:string){
+    this._snackBar.open(message, "Close",{
+      duration: 3 * 1000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   onSubmit(logingDetails:FormGroup){

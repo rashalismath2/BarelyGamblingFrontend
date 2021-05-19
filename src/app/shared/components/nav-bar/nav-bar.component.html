@@ -4,7 +4,11 @@
         
         <div class="d-flex">
             <div *ngIf='authUser; else showLogin'>
-                {{authUser.user.firstName}}
+                <button mat-button [matMenuTriggerFor]="menu">{{authUser.user.firstName}}</button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>Profile</button>
+                    <button (click)="logout()" mat-menu-item>Logout</button>
+                </mat-menu>
             </div>
             <ng-template #showLogin>
                 <button  [routerLink]="[ '/login']" mat-flat-button color="primary">Sign In</button>

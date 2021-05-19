@@ -1,5 +1,5 @@
 <section id="app-nav-bar">
-    <app-nav-bar [authUser]='_authUser$ | async '></app-nav-bar>
+    <app-nav-bar (logoutEvent)='onLogoutEvent($event)' [authUser]='_authUser$ | async '></app-nav-bar>
 </section>
 <mat-drawer-container id="app-drawer-container" class="example-container">
     <mat-drawer class="pt-4" id="side-drawer" mode="side" opened="opened">
