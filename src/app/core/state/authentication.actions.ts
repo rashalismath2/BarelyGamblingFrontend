@@ -1,6 +1,6 @@
 import { Action } from "@ngrx/store";
-import { ISignInInput } from "../../root/Entities/ISignInInput";
-import { ILoginDto } from "../../root/Entities/ILoginDto";
+import { ISignInInput } from "../../core/Entities/ISignInInput";
+import { ILoginDto } from "../../core/Entities/ILoginDto";
 
 
 export enum AuthenticationActionTypes{

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './Components/Login/login.component';
+import { LoginComponent } from './components/Login/login.component';
 import { RegisterComponent } from './Components/register/register.component';
 import { GuestGuard } from './guards/guest.guard';
 
@@ -15,4 +15,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class CoreRoutingModule { }

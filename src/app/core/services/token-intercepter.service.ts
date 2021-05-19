@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import 'rxjs/add/operator/do';
-import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { AuthenticationService } from './authentication.service';
 
 
 @Injectable()
@@ -46,4 +46,3 @@ export class TokenIntercepterService implements HttpInterceptor{
   }
 
 }
-

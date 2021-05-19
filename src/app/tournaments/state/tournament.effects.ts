@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, filter, map, mergeMap, switchMap, switchMapTo, tap } from 'rxjs/operators';
-import { ITournament } from '../../root/Entities/ITournament';
+import { ITournament } from '../../core/Entities/ITournament';
 import { TournamentsService } from '../services/tournaments.service';
 
 import * as fromTournamentActions from './tournaments.actions';

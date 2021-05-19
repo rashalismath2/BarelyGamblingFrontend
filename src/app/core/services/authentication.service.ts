@@ -1,14 +1,14 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {Injectable} from "@angular/core"
 import { Observable } from "rxjs";
-import { ISignInInput } from "../../root/Entities/ISignInInput";
-import { ILoginDto } from "../../root/Entities/ILoginDto";
+import { ISignInInput } from "../Entities/ISignInInput";
+import { ILoginDto } from "../Entities/ILoginDto";
 import { environment } from "src/environments/environment";
-import * as fromAuth from 'src/app/shared/state/reducer';
+import * as fromAuth from '../state/reducer';
 import { filter, map } from "rxjs/operators";
 import { Store } from "@ngrx/store";
-import { ISignUpInput } from "../../root/Entities/ISignupInput";
-import { IUser } from "../../root/Entities/IUser";
+import { ISignUpInput } from "../Entities/ISignupInput";
+import { IUser } from "../Entities/IUser";
 
 
 
@@ -20,7 +20,7 @@ export class AuthenticationService{
     private signInUrl=environment.apiUrl+"/auth/login"
     private signUpUrl=environment.apiUrl+"/auth/register"
 
-    constructor(private http:HttpClient,private _authenticactionStore: Store<fromAuth.SharedState>) {
+    constructor(private http:HttpClient,private _authenticactionStore: Store<fromAuth.CoreState>) {
 
     }
 

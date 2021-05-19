@@ -1,5 +1,5 @@
 import { Action } from "@ngrx/store";
-import { ITournament } from "../../root/Entities/ITournament";
+import { ITournament } from "../../core/Entities/ITournament";
 
 
 export enum TournamentActionsTypes{

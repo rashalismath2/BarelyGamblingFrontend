@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ITournament } from '../../root/Entities/ITournament';
+import { ITournament } from '../../core/Entities/ITournament';
 import { environment } from 'src/environments/environment';
 
 

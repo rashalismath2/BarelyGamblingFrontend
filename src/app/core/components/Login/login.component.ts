@@ -4,7 +4,7 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition
 import { ActivatedRoute, Params } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { takeWhile } from 'rxjs/operators';
-import { Auth } from '../../../root/Entities/Auth';
+import { Auth } from '../../Entities/Auth';
 import * as fromActions from '../../state/authentication.actions';
 import * as fromAuthState from '../../state/reducer';
 
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit,OnDestroy {
 
   constructor(
         private formBuilder:FormBuilder,
-        private authenticationState:Store<fromAuthState.SharedState>,
+        private authenticationState:Store<fromAuthState.CoreState>,
         private _snackBar: MatSnackBar,
         private route:ActivatedRoute
       ) { }

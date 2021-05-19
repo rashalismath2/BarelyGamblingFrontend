@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { SignupInput } from '../../../root/Entities/SignupInput';
+import { SignupInput } from '../../../core/Entities/SignupInput';
 
 import * as fromAuthActions from "../../state/authentication.actions"
-import { SharedState } from '../../state/reducer';
+import { CoreState } from '../../state/reducer';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
   authForm:FormGroup;
   imgURL: any;
 
-  constructor(private formBuilder:FormBuilder,private authState:Store<SharedState>) { }
+  constructor(private formBuilder:FormBuilder,private authState:Store<CoreState>) { }
 
  
   setImage(files) {

@@ -1,4 +1,4 @@
-import { ITournament } from "src/app/root/Entities/ITournament";
+import { ITournament } from "src/app/core/Entities/ITournament";
 
 export interface TournamentsResolved {
     tournaments:ITournament[],

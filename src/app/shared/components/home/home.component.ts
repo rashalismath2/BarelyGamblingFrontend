@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import * as fromAuth from 'src/app/shared/state/reducer';
+import * as fromAuth from '../../../core/state/reducer';
 
 import { Observable } from 'rxjs/Observable'
-import { ILoginDto } from 'src/app/root/Entities/ILoginDto';
+import { ILoginDto } from 'src/app/core/Entities/ILoginDto';
 
 
 @Component({
@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   _authUser$: Observable<ILoginDto>
 
   constructor(
-    private _authenticactionStore: Store<fromAuth.SharedState>) 
+    private _authenticactionStore: Store<fromAuth.CoreState>) 
   {
 
   }

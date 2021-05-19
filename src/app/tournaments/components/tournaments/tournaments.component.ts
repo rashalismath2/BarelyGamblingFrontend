@@ -2,7 +2,7 @@ import { OnDestroy } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { takeWhile } from 'rxjs/operators';
-import { ITournament } from '../../../root/Entities/ITournament';
+import { ITournament } from '../../../core/Entities/ITournament';
 import * as fromTournamentReducer from '../../state/reducer';
 
 @Component({

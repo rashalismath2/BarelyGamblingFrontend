@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { ILoginDto } from "../../root/Entities/ILoginDto";
+import { ILoginDto } from "../../core/Entities/ILoginDto";
 
 
 import * as fromRoot from "../../root/state/app.state"
@@ -7,10 +7,10 @@ import * as fromRoot from "../../root/state/app.state"
 import { AuthenticationActions, AuthenticationActionTypes } from "./authentication.actions";
 
 export interface State extends fromRoot.State{
-    shared:SharedState
+    core:CoreState
 }
 
-export interface SharedState{
+export interface CoreState{
    authentication:{
         AuthUser:ILoginDto,
         errorMessage:string,
@@ -18,7 +18,7 @@ export interface SharedState{
    }
 }
 
-const initialState:SharedState={
+const initialState:CoreState={
     authentication:{
         AuthUser:null ||  JSON.parse(localStorage.getItem('auth_user')),
         errorMessage:null,
@@ -28,7 +28,7 @@ const initialState:SharedState={
 
 
 // Selectors
-const getAuthFutureState=createFeatureSelector<SharedState>("shared");
+const getAuthFutureState=createFeatureSelector<CoreState>("core");
 
 export const getAuthUser=createSelector(
     getAuthFutureState,
@@ -45,7 +45,7 @@ export const getAuthenticationState=createSelector(
 
 
 
-export function reducer(state=initialState,action:AuthenticationActions):SharedState{
+export function reducer(state=initialState,action:AuthenticationActions):CoreState{
     switch (action.type) {
         case AuthenticationActionTypes.Login:
             return {

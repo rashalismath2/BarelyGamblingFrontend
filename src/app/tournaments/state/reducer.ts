@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { ITournament } from "../../root/Entities/ITournament";
+import { ITournament } from "../../core/Entities/ITournament";
 import { TournamentActions, TournamentActionsTypes } from "./tournaments.actions";
 
 

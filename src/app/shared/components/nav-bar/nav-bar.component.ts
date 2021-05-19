@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ILoginDto } from '../../../root/Entities/ILoginDto';
+import { ILoginDto } from '../../../core/Entities/ILoginDto';
 
 @Component({
   selector: 'app-nav-bar',

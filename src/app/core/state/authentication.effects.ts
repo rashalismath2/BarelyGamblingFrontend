@@ -4,8 +4,8 @@ import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Action } from "@ngrx/store";
 import { Observable, of } from "rxjs";
 import { catchError, map, switchMap, tap } from "rxjs/operators";
-import { ISignInInput } from "../../root/Entities/ISignInInput";
-import { ISignUpInput } from "../../root/Entities/ISignupInput";
+import { ISignInInput } from "../../core/Entities/ISignInInput";
+import { ISignUpInput } from "../../core/Entities/ISignupInput";
 import { AuthenticationService } from "../services/authentication.service";
 
 import * as fromActions from "./authentication.actions"
