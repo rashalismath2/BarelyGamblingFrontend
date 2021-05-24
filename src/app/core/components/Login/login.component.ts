@@ -5,7 +5,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { takeWhile } from 'rxjs/operators';
 import { Auth } from '../../Entities/Auth';
-import * as fromActions from '../../state/authentication.actions';
+import * as fromActions from '../../state/core.actions';
 import * as fromAuthState from '../../state/reducer';
 
 
@@ -36,6 +36,12 @@ export class LoginComponent implements OnInit,OnDestroy {
     this.route.queryParams.subscribe((params:Params)=>{
         if(params.signupSuccess){
           this.openSnackBar(params.signupSuccess)
+        }
+    })
+
+    this.route.queryParams.subscribe((params:Params)=>{
+        if(params.warningMessage){
+          this.openSnackBar(params.warningMessage)
         }
     })
 

@@ -1,9 +1,11 @@
 import { Action } from "@ngrx/store";
-import { ISignInInput } from "../../core/Entities/ISignInInput";
-import { ILoginDto } from "../../core/Entities/ILoginDto";
+import { ISignInInput } from "../Entities/ISignInInput";
+import { ILoginDto } from "../Entities/ILoginDto";
+import { SearchedUser } from "../Entities/SearchedUser";
+import { IUser } from "../Entities/IUser";
 
 
-export enum AuthenticationActionTypes{
+export enum CoreActionTypes{
     Login="[authentications] Login",
     LoginSuccess="[authentications] LoginSuccess",
     LoginFailiure="[authentications] LoginFailiure",
@@ -14,45 +16,64 @@ export enum AuthenticationActionTypes{
 
     Logout="[authentication] Logout",
     LogoutSuccess="[authentication] Logout success",
+
+    LoadUserByEmail="[user] LoadUserByEmail",
+    LoadUserByEmailSuccess="[user] LoadUserByEmailSuccess",
+    LoadUserByEmailFailure="[user] LoadUserByEmailFailure",
+
 }
 
 
 export class Login implements Action{
-    readonly type=AuthenticationActionTypes.Login;
+    readonly type=CoreActionTypes.Login;
     constructor(public payload:ISignInInput) {  }
 }
 export class LoginSuccess implements Action{
-    readonly type=AuthenticationActionTypes.LoginSuccess;
+    readonly type=CoreActionTypes.LoginSuccess;
     constructor(public payload:ILoginDto) {  }
 }
 export class LoginFailiure implements Action{
-    readonly type=AuthenticationActionTypes.LoginFailiure;
+    readonly type=CoreActionTypes.LoginFailiure;
     constructor(public payload:string) {  }
 }
 
 export class Signup implements Action{
-    readonly type=AuthenticationActionTypes.Signup;
+    readonly type=CoreActionTypes.Signup;
     constructor(public payload:ISignInInput) {  }
 }
 export class SignupSuccess implements Action{
-    readonly type=AuthenticationActionTypes.SignupSuccess;
+    readonly type=CoreActionTypes.SignupSuccess;
     constructor(public payload:string) {  }
 }
 export class SignupFailiure implements Action{
-    readonly type=AuthenticationActionTypes.SignupFailiure;
+    readonly type=CoreActionTypes.SignupFailiure;
     constructor(public payload:string) {  }
 }
 
 export class Logout implements Action{
-    readonly type=AuthenticationActionTypes.Logout;
+    readonly type=CoreActionTypes.Logout;
     constructor() {  }
 }
 export class LogoutSuccess implements Action{
-    readonly type=AuthenticationActionTypes.LogoutSuccess;
+    readonly type=CoreActionTypes.LogoutSuccess;
     constructor() {  }
 }
 
-export type AuthenticationActions=Login
+export class LoadUserByEmail implements Action{
+    readonly type=CoreActionTypes.LoadUserByEmail;
+    constructor(public payload:SearchedUser) {  }
+}
+export class LoadUserByEmailSuccess implements Action{
+    readonly type=CoreActionTypes.LoadUserByEmailSuccess;
+    constructor(public payload:IUser[]) {  }
+}
+export class LoadUserByEmailFailure implements Action{
+    readonly type=CoreActionTypes.LoadUserByEmailFailure;
+    constructor(public payload:string) {  }
+}
+
+
+export type CoreActions=Login
                             |LoginSuccess
                             |LoginFailiure
                             |Signup
@@ -60,4 +81,7 @@ export type AuthenticationActions=Login
                             |SignupFailiure
                             |Logout
                             |LogoutSuccess
+                            | LoadUserByEmail 
+                            | LoadUserByEmailSuccess 
+                            | LoadUserByEmailFailure
                             ;

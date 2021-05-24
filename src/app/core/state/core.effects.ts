@@ -4,27 +4,31 @@ import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Action } from "@ngrx/store";
 import { Observable, of } from "rxjs";
 import { catchError, map, switchMap, tap } from "rxjs/operators";
-import { ISignInInput } from "../../core/Entities/ISignInInput";
-import { ISignUpInput } from "../../core/Entities/ISignupInput";
+import { ISignInInput } from "../Entities/ISignInInput";
+import { ISignUpInput } from "../Entities/ISignupInput";
+import { IUser } from "../Entities/IUser";
+import { SearchedUser } from "../Entities/SearchedUser";
 import { AuthenticationService } from "../services/authentication.service";
+import { UsersService } from "../services/users.service";
 
-import * as fromActions from "./authentication.actions"
+import * as fromActions from "./core.actions"
 
 
 @Injectable()
-export class AuthenticationEffect{
+export class CoreEffect{
 
     constructor(
         private actions$:Actions,
         private authService:AuthenticationService,
-        private router:Router
+        private router:Router,
+        private usersService:UsersService
         ) {
 
     }
 
     @Effect()
     login$:Observable<Action>=this.actions$.pipe(
-        ofType(fromActions.AuthenticationActionTypes.Login),
+        ofType(fromActions.CoreActionTypes.Login),
         map((action:fromActions.Login)=>action.payload),
         switchMap((user:ISignInInput)=>
             this.authService.signIn(user).pipe(
@@ -36,7 +40,7 @@ export class AuthenticationEffect{
 
     @Effect({ dispatch: false })
     logInSuccess$: Observable<any> = this.actions$.pipe(
-    ofType(fromActions.AuthenticationActionTypes.LoginSuccess),
+    ofType(fromActions.CoreActionTypes.LoginSuccess),
     tap((user) => {
         localStorage.setItem("auth_user",JSON.stringify(user.payload))
         this.router.navigate(["/home"],{queryParams:{loginSuccess:"Login was successful"}});
@@ -45,7 +49,7 @@ export class AuthenticationEffect{
 
     @Effect()
     signup$:Observable<Action>=this.actions$.pipe(
-        ofType(fromActions.AuthenticationActionTypes.Signup),
+        ofType(fromActions.CoreActionTypes.Signup),
         map((action:fromActions.Signup)=>action.payload),
         switchMap((formData:ISignUpInput)=>
             this.authService.signUp(formData).pipe(
@@ -57,7 +61,7 @@ export class AuthenticationEffect{
 
     @Effect({ dispatch: false })
     signupSuccess$: Observable<any> = this.actions$.pipe(
-    ofType(fromActions.AuthenticationActionTypes.SignupSuccess),
+    ofType(fromActions.CoreActionTypes.SignupSuccess),
     tap((user) => {
         this.router.navigate(["/login"],{queryParams:{signupSuccess:"Signup was successful. Please login to continue"}});
     })
@@ -65,7 +69,7 @@ export class AuthenticationEffect{
 
     @Effect()
     logout$:Observable<Action>=this.actions$.pipe(
-        ofType(fromActions.AuthenticationActionTypes.Logout),
+        ofType(fromActions.CoreActionTypes.Logout),
         tap(()=>
             localStorage.removeItem("auth_user")
         ),
@@ -76,10 +80,25 @@ export class AuthenticationEffect{
 
     @Effect({ dispatch: false })
     logoutSuccess$:Observable<Action>=this.actions$.pipe(
-        ofType(fromActions.AuthenticationActionTypes.LogoutSuccess),
+        ofType(fromActions.CoreActionTypes.LogoutSuccess),
         tap(()=>{
             this.router.navigate(["/"],{queryParams:{logoutSuccess:"Signout was successful."}});
         }),
     )
 
+
+    @Effect()
+    loadUserByEmail$:Observable<Action>=this.actions$.pipe(
+        ofType(fromActions.CoreActionTypes.LoadUserByEmail),
+        map((action:fromActions.LoadUserByEmail)=>action.payload),
+        switchMap((searchedUser:SearchedUser)=>
+           { 
+               if(searchedUser.email=="") return of(new fromActions.LoadUserByEmailFailure(""))
+                return this.usersService.getUsersByEmail(searchedUser.email).pipe(
+                    map((loadedUsers:IUser[])=>(new fromActions.LoadUserByEmailSuccess(loadedUsers))),
+                    catchError(error=>of(new fromActions.LoadUserByEmailFailure(error)))
+            )
+        }
+        )
+    )
 }

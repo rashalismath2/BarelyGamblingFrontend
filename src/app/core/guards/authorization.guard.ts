@@ -16,7 +16,7 @@ export class AuthorizationGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       if(!this._authService.userIsAuthenticated()){
-        this._router.navigate(["login"])
+        this._router.navigate(["login"],{queryParams:{warningMessage:"You have tou be logged in to proceed with this action"}})
         return false
       }
       return true;

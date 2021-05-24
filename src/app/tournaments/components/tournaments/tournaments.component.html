@@ -1,4 +1,18 @@
 <app-home>
+    <div id="tournaments-header" class="row">
+        <div class="col-8">
+            <p>
+                <mat-form-field appearance="legacy">
+                  <mat-label>Search</mat-label>
+                  <input matInput placeholder="Placeholder">
+                  <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+              </p>
+        </div>
+        <div class="col-4">
+            <a [routerLink]="[ '/tournaments/create']" mat-flat-button color="primary">Create</a>
+        </div>
+    </div>
     <div class="home-components">
         <div id="tournament-card-containor" *ngIf="_tournaments!=null && _tournaments.length>0;else tournamentsLoading">
             <app-tournament-card (selectedTournament)='selectedTournament.emit($event)'   class="tournament-card" [_tournament]='tournament' *ngFor="let tournament of _tournaments"></app-tournament-card>
@@ -6,7 +20,7 @@
     
         <ng-template #tournamentsLoading>
             <div id="loading-spinner" >
-                <mat-spinner  *ngIf="_tournaments!=null && _tournaments.length==0 && _fetchingTournamentsComplete==false;else noTournamentsFound"></mat-spinner>
+                <mat-spinner  *ngIf="_tournaments==null && _fetchingTournamentsComplete==false;else noTournamentsFound"></mat-spinner>
             </div>
         </ng-template>
         <ng-template #noTournamentsFound>

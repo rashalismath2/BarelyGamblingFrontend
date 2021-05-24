@@ -1,4 +1,5 @@
 import { Action } from "@ngrx/store";
+import { IUser } from "src/app/core/Entities/IUser";
 import { ITournament } from "../../core/Entities/ITournament";
 
 
@@ -9,7 +10,14 @@ export enum TournamentActionsTypes{
     SetSelectedTournamentId="[tounaments] SetSelectedTournamentId",
     LoadSelectedTournament="[tournaments] LoadSelectedTournament",
     LoadSelectedTournamentSuccess="[tournaments] LoadSelectedTournamentSuccess",
-    LoadSelectedTournamentFailiure="[tournaments] LoadSelectedTournamentFailiure"
+    LoadSelectedTournamentFailiure="[tournaments] LoadSelectedTournamentFailiure",
+
+    CreateTournament="[tournaments] CreateTournament",
+    CreateTournamentSuccess="[tournaments] CreateTournamentSuccess",
+    CreateTournamentFailiure="[tournaments] CreateTournamentFailiure",
+
+    SetSelectedTournamentTeamMemberForTeamOne="[tournaments] SetSelectedTournamentTeamMemberForTeamOne",
+    
 }
 
 export class LoadTournaments implements Action{
@@ -40,11 +48,30 @@ export class LoadSelectedTournamentFailiure implements Action{
     constructor(public payload:string){}
 }
 
+export class CreateTournament implements Action{
+    readonly type=TournamentActionsTypes.CreateTournament;
+    constructor(public payload:ITournament){}
+}
+export class CreateTournamentSuccess implements Action{
+    readonly type=TournamentActionsTypes.CreateTournamentSuccess;
+    constructor(public payload:ITournament){}
+}
+export class CreateTournamentFailiure implements Action{
+    readonly type=TournamentActionsTypes.CreateTournamentFailiure;
+    constructor(public payload:string){}
+}
+
 
 export class SetSelectedTournamentId implements Action{
     readonly type=TournamentActionsTypes.SetSelectedTournamentId;
     constructor(public payload:string){}
 }
+
+export class SetSelectedTournamentTeamMemberForTeamOne implements Action{
+    readonly type=TournamentActionsTypes.SetSelectedTournamentTeamMemberForTeamOne;
+    constructor(public payload:IUser){}
+}
+
 
 export type TournamentActions=LoadTournaments
                             | LoadSuccess
@@ -52,4 +79,8 @@ export type TournamentActions=LoadTournaments
                             | SetSelectedTournamentId
                             | LoadSelectedTournament
                             | LoadSelectedTournamentSuccess
-                            | LoadSelectedTournamentFailiure;
+                            | LoadSelectedTournamentFailiure
+                            |CreateTournament
+                            |CreateTournamentSuccess
+                            |CreateTournamentFailiure
+                            |SetSelectedTournamentTeamMemberForTeamOne;

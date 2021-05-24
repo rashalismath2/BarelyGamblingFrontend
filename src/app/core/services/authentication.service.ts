@@ -50,12 +50,7 @@ export class AuthenticationService{
 
 
     signUp(formInputs:ISignUpInput):Observable<IUser>{
-        const httpOptions = {
-            headers: new HttpHeaders({
-              "Accept":  'application/json',
-              "Content-Type": "multipart/form-data"
-            })
-          };
+
 
           var formData = new FormData();
           formData.append("Email", formInputs.email);

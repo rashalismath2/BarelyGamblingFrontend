@@ -6,7 +6,7 @@ import { takeWhile } from 'rxjs/operators';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 import * as fromAuth from '../../../core/state/reducer';
-import * as fromAuthActions from "../../../core/state/authentication.actions"
+import * as fromAuthActions from "../../../core/state/core.actions"
 
 
 @Component({

@@ -5,7 +5,7 @@ import { select, Store } from '@ngrx/store';
 import { takeWhile } from 'rxjs/operators';
 import { SignupInput } from '../../../core/Entities/SignupInput';
 
-import * as fromAuthActions from "../../state/authentication.actions"
+import * as fromAuthActions from "../../state/core.actions"
 import { CoreState } from '../../state/reducer';
 import * as fromAuthState from '../../state/reducer';
 
@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit,OnDestroy {
     private authenticationState:Store<fromAuthState.CoreState>,
     private _snackBar: MatSnackBar,
     private formBuilder:FormBuilder,
-    private authState:Store<CoreState>) { }
+    private coreState:Store<CoreState>) { }
 
   ngOnDestroy(): void {
     this._componentIsActive=false;
@@ -90,7 +90,7 @@ export class RegisterComponent implements OnInit,OnDestroy {
         logingDetails.value.profilePicture,
       );
 
-      this.authState.dispatch(new fromAuthActions.Signup(auth))
+      this.coreState.dispatch(new fromAuthActions.Signup(auth))
     }
   }
 

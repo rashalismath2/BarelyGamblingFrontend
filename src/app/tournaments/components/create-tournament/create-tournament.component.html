@@ -1,0 +1,196 @@
+<app-home>
+    <div class="home-components">
+        <mat-card class="example-card">
+            <form [formGroup]="newTournamentForm" (ngSubmit)="onSubmit(newTournamentForm)">
+                <div id="tournaments-teams-banner">
+                    <p team-data-index='1'>{{newTournamentForm.get("teamOneTitle").value | getTeamShortnamePipe}}</p>
+                    <p team-data-index='2'>{{newTournamentForm.get("teamOneTitle").value | getTeamShortnamePipe}}</p>
+                    <span team-data-index='3'>Vs</span>
+                </div>
+                <mat-card-content>
+                    <ul class="tournament-details-list">
+                        <li>
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Title</mat-label>
+                                <input formControlName="title" matInput="matInput" type="text"/></mat-form-field>
+                        </li>
+                        <li>
+                            <mat-form-field class="example-full-width">
+                                <mat-label>On</mat-label>
+                                <input formControlName="date" matInput="matInput" type="date"/></mat-form-field>
+                        </li>
+                        <li>
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Vanue</mat-label>
+                                <input formControlName="vanue" matInput="matInput" type="text"/></mat-form-field>
+                        </li>
+                        <li>
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Grand price</mat-label>
+                                <input formControlName="price" matInput="matInput" type="text"/></mat-form-field>
+                        </li>
+                        <li>
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Description</mat-label>
+                                <textarea formControlName="description" matInput="matInput"></textarea>
+                            </mat-form-field>
+                        </li>
+                    </ul>
+
+                    <div class="tournament-details-hr"></div>
+
+                    <div id="tournament-details-teams-container">
+                        <ul class="tournament-details-teams-container">
+                            <div class="team-header">
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Team one</mat-label>
+                                    <input formControlName="teamOneTitle" matInput="matInput" type="text"/></mat-form-field>
+                                <button type="button" (click)="addTeamOneMember()" mat-icon-button="mat-icon-button">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </div>
+                            <div class="team-members-container">
+                                <p class="team-members-title">Members</p>
+                                <ul class="team-members-list" formArrayName="teamOneMembers">
+                                    <li *ngFor="let teamMember of teamOneMembers.controls;let i=index">
+                                        <div class="team-member-container" [formGroupName]="i">
+                                            <div>
+                                                <mat-form-field class="example-full-width" *ngIf="userAtTeamOneIndex(i).value=='' ; else showAddedUser">
+                                                    <mat-label>Member</mat-label>
+                                                    <input [data-member-field]="i" (change)="teamOneMemberChange($event)" type="text" matInput="matInput" formControlName="userId"/>
+                                                </mat-form-field>
+
+                                                <ng-template #showAddedUser>
+                                                    <div  class="selected-user" >
+                                                        <mat-card class="example-card">
+                                                            <mat-card-header>
+                                                                <div mat-card-avatar="mat-card-avatar" class="example-header-image">
+                                                                    <img class="user-card-avatart" src={{userAtTeamOneIndex(i).value.coverUrl}}/>
+                                                                </div>
+                                                                <mat-icon (click)="removeSelectedUserForTeamOne(i)">close</mat-icon>
+                                                                <mat-card-title>
+                                                                    {{userAtTeamOneIndex(i).value.firstName}}
+                                                                    {{userAtTeamOneIndex(i).value.lastName}}
+                                                                </mat-card-title>
+                                                            </mat-card-header>
+                                                        </mat-card>
+                                                    </div>
+                                                </ng-template>  
+
+                                                <div *ngIf="searchedUsersElementId==i" id="teamMembersSearchContainer">
+                                                    <ul  *ngIf="searchedUsersElementId!=null" class="tournament-team-memebers">
+                                                        <li (click)="setSelectedMemberForTeamOne(user,i)" *ngFor="let user of searchedUsers$ | async">
+                                                            <mat-card class="example-card">
+                                                                <mat-card-header>
+                                                                    <div mat-card-avatar="mat-card-avatar" class="example-header-image">
+                                                                        <img class="user-card-avatart" src={{user.coverUrl}}/>
+                                                                    </div>
+                                                                    <mat-card-title>{{user.firstName}}
+                                                                        {{user.lastName}}</mat-card-title>
+                                                                </mat-card-header>
+                                                            </mat-card>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                            <div>
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>Type</mat-label>
+                                                    <mat-select formControlName="type">
+                                                        <mat-option value="captain">Captain</mat-option>
+                                                        <mat-option selected="selected" value="member">Member</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="team-description">
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Description</mat-label>
+                                    <textarea formControlName="teamOneDescription" matInput="matInput"></textarea>
+                                </mat-form-field>
+                            </div>
+                        </ul>
+                        <ul class="tournament-details-teams-container">
+                            <div class="team-header">
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Team two</mat-label>
+                                    <input formControlName="teamTwoTitle" matInput="matInput" type="text"/></mat-form-field>
+                                <button type="button" (click)="addTeamTwoMember()" mat-icon-button="mat-icon-button">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </div>
+                            <div class="team-members-container">
+                                <p class="team-members-title">Members</p>
+                                <ul class="team-members-list">
+                                    <li formArrayName="teamTwoMembers" *ngFor="let teamMember of teamTwoMembers.controls;let i=index">
+                                        <div class="team-member-container" [formGroupName]="i">
+                                            <div>
+                                                <mat-form-field class="example-full-width" *ngIf="userAtTeamTwoIndex(i).value=='' ; else showAddedUserForTeamTwo">
+                                                    <mat-label>Member</mat-label>
+                                                    <input [data-member-field]="i" (change)="teamTwoMemberChange($event)" type="text" matInput="matInput" formControlName="userId"/>
+                                                </mat-form-field>
+
+                                                <ng-template #showAddedUserForTeamTwo>
+                                                    <div  class="selected-user" >
+                                                        <mat-card class="example-card">
+                                                            <mat-card-header>
+                                                                <div mat-card-avatar="mat-card-avatar" class="example-header-image">
+                                                                    <img class="user-card-avatart" src={{userAtTeamTwoIndex(i).value.coverUrl}}/>
+                                                                </div>
+                                                                <mat-icon (click)="removeSelectedUserForTeamTwo(i)">close</mat-icon>
+                                                                <mat-card-title>
+                                                                    {{userAtTeamTwoIndex(i).value.firstName}}
+                                                                    {{userAtTeamTwoIndex(i).value.lastName}}
+                                                                </mat-card-title>
+                                                            </mat-card-header>
+                                                        </mat-card>
+                                                    </div>
+                                                </ng-template>  
+
+                                                <div *ngIf="searchedUsersForTeamTwoElementId==i" id="teamMembersSearchContainer">
+                                                    <ul  *ngIf="searchedUsersForTeamTwoElementId!=null" class="tournament-team-memebers">
+                                                        <li (click)="setSelectedMemberForTeamTwo(user,i)" *ngFor="let user of searchedUsers$ | async">
+                                                            <mat-card class="example-card">
+                                                                <mat-card-header>
+                                                                    <div mat-card-avatar="mat-card-avatar" class="example-header-image">
+                                                                        <img class="user-card-avatart" src={{user.coverUrl}}/>
+                                                                    </div>
+                                                                    <mat-card-title>{{user.firstName}}
+                                                                        {{user.lastName}}</mat-card-title>
+                                                                </mat-card-header>
+                                                            </mat-card>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>Type</mat-label>
+                                                    <mat-select formControlName="type">
+                                                        <mat-option value="captain">Captain</mat-option>
+                                                        <mat-option selected="selected" value="member">Member</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="team-description">
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Description</mat-label>
+                                    <textarea formControlName="teamTwoDescription" matInput="matInput"></textarea>
+                                </mat-form-field>
+                            </div>
+                        </ul>
+                    </div>
+                </mat-card-content>
+                <button type="submit">Create</button>
+            </form>
+        </mat-card>
+    </div>
+</app-home>

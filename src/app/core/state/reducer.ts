@@ -3,8 +3,9 @@ import { ILoginDto } from "../../core/Entities/ILoginDto";
 
 
 import * as fromRoot from "../../root/state/app.state"
+import { IUser } from "../Entities/IUser";
 
-import { AuthenticationActions, AuthenticationActionTypes } from "./authentication.actions";
+import { CoreActions, CoreActionTypes } from "./core.actions";
 
 export interface State extends fromRoot.State{
     core:CoreState
@@ -16,7 +17,13 @@ export interface CoreState{
         errorMessage:string,
         authenticationIsInProcess:boolean,
         logingOutIsOnProcess:boolean,
-   }
+   },
+   searchedUsers:{
+    users:IUser[],
+    element:string,
+    elementForTeamTwo:string,
+    loadError:string
+}
 }
 
 const initialState:CoreState={
@@ -25,35 +32,54 @@ const initialState:CoreState={
         errorMessage:null,
         authenticationIsInProcess:false,
         logingOutIsOnProcess:false
+    },
+    searchedUsers:{
+        users:[],
+        element:null,
+        loadError:null,
+        elementForTeamTwo:null
     }
 }
 
 
 // Selectors
-const getAuthFutureState=createFeatureSelector<CoreState>("core");
+const getCoreFutureState=createFeatureSelector<CoreState>("core");
 
 export const getAuthUser=createSelector(
-    getAuthFutureState,
+    getCoreFutureState,
     state=>state.authentication.AuthUser
 )
 export const getAuthErrorMessage=createSelector(
-    getAuthFutureState,
+    getCoreFutureState,
     state=>state.authentication.errorMessage
 )
 export const getAuthenticationState=createSelector(
-    getAuthFutureState,
+    getCoreFutureState,
     state=>state.authentication.authenticationIsInProcess
 )
 export const getSignOutState=createSelector(
-    getAuthFutureState,
+    getCoreFutureState,
     state=>state.authentication.logingOutIsOnProcess
+)
+
+export const getSearchedUsers=createSelector(
+    getCoreFutureState,
+    state=>state.searchedUsers.users
+)
+export const getSearchedUsersElementId=createSelector(
+    getCoreFutureState,
+    state=>state.searchedUsers.element
+)
+export const searchedUsersForTeamTwoElementId=createSelector(
+    getCoreFutureState,
+    state=>state.searchedUsers.elementForTeamTwo
 )
 
 
 
-export function reducer(state=initialState,action:AuthenticationActions):CoreState{
+export function reducer(state=initialState,action:CoreActions):CoreState{
     switch (action.type) {
-        case AuthenticationActionTypes.Login:
+        case CoreActionTypes.Login:
             return {
                 ...state,
                 authentication:{
@@ -62,7 +88,7 @@ export function reducer(state=initialState,action:AuthenticationActions):CoreSta
                     authenticationIsInProcess:true
                 }
             }
-        case AuthenticationActionTypes.LoginSuccess:
+        case CoreActionTypes.LoginSuccess:
             return {
                 ...state,
                 authentication:{
@@ -72,7 +98,7 @@ export function reducer(state=initialState,action:AuthenticationActions):CoreSta
                     authenticationIsInProcess:false
                 }
             }
-        case AuthenticationActionTypes.LoginFailiure:
+        case CoreActionTypes.LoginFailiure:
             return {
                 ...state,
                 authentication:{
@@ -83,7 +109,7 @@ export function reducer(state=initialState,action:AuthenticationActions):CoreSta
                 }
             }
 
-        case AuthenticationActionTypes.Signup:
+        case CoreActionTypes.Signup:
             return {
                 ...state,
                 authentication:{
@@ -92,7 +118,7 @@ export function reducer(state=initialState,action:AuthenticationActions):CoreSta
                     authenticationIsInProcess:true
                 }
             }
-        case AuthenticationActionTypes.SignupSuccess:
+        case CoreActionTypes.SignupSuccess:
             return {
                 ...state,
                 authentication:{
@@ -100,7 +126,7 @@ export function reducer(state=initialState,action:AuthenticationActions):CoreSta
                     authenticationIsInProcess:false
                 }
             }
-        case AuthenticationActionTypes.SignupFailiure:
+        case CoreActionTypes.SignupFailiure:
             return {
                 ...state,
                 authentication:{
@@ -109,7 +135,7 @@ export function reducer(state=initialState,action:AuthenticationActions):CoreSta
                     authenticationIsInProcess:false
                 }
             }
-        case AuthenticationActionTypes.Logout:
+        case CoreActionTypes.Logout:
             return {
                 ...state,
                 authentication:{
@@ -118,7 +144,7 @@ export function reducer(state=initialState,action:AuthenticationActions):CoreSta
                     logingOutIsOnProcess:true
                 }
             }
-        case AuthenticationActionTypes.LogoutSuccess:
+        case CoreActionTypes.LogoutSuccess:
             return {
                 ...state,
                 authentication:{
@@ -126,6 +152,48 @@ export function reducer(state=initialState,action:AuthenticationActions):CoreSta
                     logingOutIsOnProcess:false
                 }
             }
+            case CoreActionTypes.LoadUserByEmail:
+                if(action.payload.searchingForElement=="one"){
+                    return {
+                        ...state,
+                        searchedUsers:{
+                            ...state.searchedUsers,
+                            users:[],
+                            element:action.payload.element,
+                            elementForTeamTwo:null,
+                            loadError:null
+                        }
+                    }
+                }
+                return {
+                    ...state,
+                    searchedUsers:{
+                        ...state.searchedUsers,
+                        users:[],
+                        element:null,
+                        elementForTeamTwo:action.payload.elementForTeamTwo,
+                        loadError:null
+                    }
+                }
+            case CoreActionTypes.LoadUserByEmailSuccess:
+                return {
+                    ...state,
+                    searchedUsers:{
+                        ...state.searchedUsers,
+                        users:action.payload
+                    }
+                }
+            case CoreActionTypes.LoadUserByEmailFailure:
+                return {
+                    ...state,
+                    searchedUsers:{
+                        ...state.searchedUsers,
+                        loadError:action.payload,
+                        users:[],
+                        element:null,
+                        elementForTeamTwo:null,
+                    }
+                }
         default:
             return state;
     }

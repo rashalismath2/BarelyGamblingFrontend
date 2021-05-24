@@ -1,42 +1,27 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ITournament } from '../../core/Entities/ITournament';
 import { environment } from 'src/environments/environment';
-
+import { User } from '../Entities/User';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TournamentsService {
+export class UsersService {
 
-  private _url:string=environment.apiUrl+"/tournaments"
+  private _url:string=environment.apiUrl+"/users"
 
   constructor(private http:HttpClient) { }
 
-  retrieveAllTournaments():Observable<ITournament[]>{
-    return this.http.get<ITournament[]>(this._url)
+  getUsersByEmail(email:string):Observable<User[]>{
+    return this.http.get<User[]>(this._url+"?email="+email)
     .pipe(
       catchError(this.handleError)
     )
   }
 
-  GetTournamentById(id:string):Observable<ITournament>{
-    return this.http.get<ITournament>(this._url+`/${id}`)
-    .pipe(
-      catchError(this.handleError)
-    )
-  }
-
-  createTournament(tournament:ITournament):Observable<ITournament>{
-    return this.http.post<ITournament>(this._url,tournament)
-    .pipe(
-      catchError(this.handleError)
-    )
-  }
-  
+    
   private handleError(error:HttpErrorResponse) {
     console.log(error)
     let errorMessage=""
@@ -47,10 +32,9 @@ export class TournamentsService {
       errorMessage="You have to be signed in to proceed with this action"
     }
     else{
-      errorMessage="An error occured. Please try again"
+      errorMessage="An error occured in getting user by email. Please try again"
     }
 
     return throwError(errorMessage);
   }
 }
-

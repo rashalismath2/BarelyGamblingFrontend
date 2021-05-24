@@ -14,10 +14,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatSelectModule} from '@angular/material/select';
 
 import { HomeComponent } from './components/home/home.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
-
 
 @NgModule({
   declarations: [
@@ -40,6 +40,8 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     MatInputModule,
     HttpClientModule,
     MatSnackBarModule,
+    MatSelectModule,
+    
   ],
   exports:[
     ReactiveFormsModule,
@@ -55,7 +57,8 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     MatSnackBarModule,
     NavBarComponent,
     CommonModule,
-    HomeComponent
+    HomeComponent,
+    MatSelectModule,
   ]
 })
 export class SharedModule { }

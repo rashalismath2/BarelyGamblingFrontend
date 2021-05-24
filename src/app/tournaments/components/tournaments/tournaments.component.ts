@@ -48,6 +48,18 @@ export class TournamentsComponent implements OnInit,OnDestroy {
       next:(tournaments:ITournament[])=>this._tournaments=tournaments,
       complete:()=>{
         this._fetchingTournamentsComplete=true 
+      },
+      error:()=>{
+      }
+    })
+
+    this.tournamentStore
+    .pipe(select(fromTournamentReducer.getLoadFailiureMessage),
+      takeWhile(()=>this.componentActive))
+    .subscribe(error=>{
+      this._fetchingTournamentsComplete=true;
+      if(error!=null){
+        this.openSnackBar(error)
       }
     })
 

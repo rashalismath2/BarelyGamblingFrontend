@@ -14,13 +14,17 @@ export interface State extends fromRoot.State{
 export interface TournamentsState{
     tournaments:ITournament[],
     loadFailiureMessage:string,
-    selectedTournamentId:string
+    selectedTournamentId:string,
+    creatingTournamentState:boolean,
+    creatingTournamentFailedMessage:string
 }
 
 const initialState:TournamentsState={
     tournaments:null,
     loadFailiureMessage:null,
-    selectedTournamentId:null
+    selectedTournamentId:null,
+    creatingTournamentState:false,
+    creatingTournamentFailedMessage:null
 }
 
 
@@ -30,6 +34,10 @@ const getTournamentFutureState=createFeatureSelector<TournamentsState>("tourname
 export const getTournaments=createSelector(
     getTournamentFutureState,
     state=>state.tournaments
+)
+export const getLoadFailiureMessage=createSelector(
+    getTournamentFutureState,
+    state=>state.loadFailiureMessage
 )
 
 export const getSelectedTournamentId=createSelector(
@@ -92,6 +100,23 @@ export function reducer(state=initialState,action:TournamentActions):Tournaments
                     ...state,
                     selectedTournamentId:null,
                     loadFailiureMessage:action.payload,
+                }
+            case TournamentActionsTypes.CreateTournament: 
+                return {
+                    ...state,
+                    creatingTournamentState:true,
+                }
+            case TournamentActionsTypes.CreateTournamentSuccess: 
+                return {
+                    ...state,
+                    creatingTournamentState:false,
+                    tournaments:[...state.tournaments,action.payload]
+                }
+            case TournamentActionsTypes.CreateTournamentFailiure: 
+                return {
+                    ...state,
+                    creatingTournamentState:false,
+                    creatingTournamentFailedMessage:action.payload
                 }
             default:
                 return state;
