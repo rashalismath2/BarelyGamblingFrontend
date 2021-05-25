@@ -10,7 +10,7 @@ import { Store } from "@ngrx/store";
 import { ISignUpInput } from "../Entities/ISignupInput";
 import { IUser } from "../Entities/IUser";
 
-
+import * as coreReducer from "../state/reducer"
 
 @Injectable({
   providedIn:"root"
@@ -20,27 +20,24 @@ export class AuthenticationService{
     private signInUrl=environment.apiUrl+"/auth/login"
     private signUpUrl=environment.apiUrl+"/auth/register"
 
-    constructor(private http:HttpClient,private _authenticactionStore: Store<fromAuth.CoreState>) {
+    private authUser=null
 
+    constructor(private http:HttpClient,private _authenticactionStore: Store<fromAuth.CoreState>) {
+      this._authenticactionStore
+        .select(coreReducer.getAuthUser)
+        .subscribe(user=> this.authUser=user)
     }
 
-
     getJWTToken():string{
-      return  JSON.parse(localStorage.getItem('auth_user'))
-      ?JSON.parse(localStorage.getItem('auth_user')).token
-      :null
+      return this.authUser?this.authUser.token:null
     }
     
     userIsAuthenticated():boolean{
-      return  JSON.parse(localStorage.getItem('auth_user'))
-      ?true
-      :false
+      return  this.authUser?true:false
     }
 
     getAuthUser():Observable<ILoginDto>{
-      return this._authenticactionStore.select(fromAuth.getAuthUser).pipe(
-        filter(auth=>auth!=null)
-      )
+      return this.authUser
     }
     
       
@@ -50,8 +47,6 @@ export class AuthenticationService{
 
 
     signUp(formInputs:ISignUpInput):Observable<IUser>{
-
-
           var formData = new FormData();
           formData.append("Email", formInputs.email);
           formData.append("Password", formInputs.password);

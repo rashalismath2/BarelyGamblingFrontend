@@ -59,6 +59,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     CommonModule,
     HomeComponent,
     MatSelectModule,
+    MatMenuModule
   ]
 })
 export class SharedModule { }

@@ -69,6 +69,27 @@ export class TournamentEffects {
       }),
   )
 
+  @Effect()
+  updateTournament$=this.actions$.pipe(
+    ofType(fromTournamentActions.TournamentActionsTypes.UpdateTournament),
+    map((action:fromTournamentActions.UpdateTournament)=>action.payload),
+    switchMap((tournament:ITournament)=>
+      this.tournamentService.updateTournament(tournament).pipe(
+        map((tournament:ITournament)=>(new fromTournamentActions.UpdateTournamentSuccess(tournament))),
+        catchError(err=>of(new fromTournamentActions.UpdateTournamentFailiure(err)))
+      )
+    )
+  )
+
+  @Effect({ dispatch: false })
+  UpdateTournamentSuccessfully$=this.actions$.pipe(
+      ofType(fromTournamentActions.TournamentActionsTypes.UpdateTournamentSuccess),
+      map((action:fromTournamentActions.UpdateTournamentSuccess)=>action.payload),
+      tap((tournament:ITournament)=>{
+          this.router.navigate(["tournaments",tournament.id],{queryParams:{tournament_operation:"Tournament was updated."}});
+      }),
+  )
+
 
 
 

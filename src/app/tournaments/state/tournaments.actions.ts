@@ -16,7 +16,9 @@ export enum TournamentActionsTypes{
     CreateTournamentSuccess="[tournaments] CreateTournamentSuccess",
     CreateTournamentFailiure="[tournaments] CreateTournamentFailiure",
 
-    SetSelectedTournamentTeamMemberForTeamOne="[tournaments] SetSelectedTournamentTeamMemberForTeamOne",
+    UpdateTournament="[tournaments] UpdateTournament",
+    UpdateTournamentSuccess="[tournaments] UpdateTournamentSuccess",
+    UpdateTournamentFailiure="[tournaments] UpdateTournamentFailiure",
     
 }
 
@@ -62,14 +64,23 @@ export class CreateTournamentFailiure implements Action{
 }
 
 
-export class SetSelectedTournamentId implements Action{
-    readonly type=TournamentActionsTypes.SetSelectedTournamentId;
+export class UpdateTournament implements Action{
+    readonly type=TournamentActionsTypes.UpdateTournament;
+    constructor(public payload:ITournament){}
+}
+export class UpdateTournamentSuccess implements Action{
+    readonly type=TournamentActionsTypes.UpdateTournamentSuccess;
+    constructor(public payload:ITournament){}
+}
+export class UpdateTournamentFailiure implements Action{
+    readonly type=TournamentActionsTypes.UpdateTournamentFailiure;
     constructor(public payload:string){}
 }
 
-export class SetSelectedTournamentTeamMemberForTeamOne implements Action{
-    readonly type=TournamentActionsTypes.SetSelectedTournamentTeamMemberForTeamOne;
-    constructor(public payload:IUser){}
+
+export class SetSelectedTournamentId implements Action{
+    readonly type=TournamentActionsTypes.SetSelectedTournamentId;
+    constructor(public payload:string){}
 }
 
 
@@ -83,4 +94,7 @@ export type TournamentActions=LoadTournaments
                             |CreateTournament
                             |CreateTournamentSuccess
                             |CreateTournamentFailiure
-                            |SetSelectedTournamentTeamMemberForTeamOne;
+                            |UpdateTournament
+                            |UpdateTournamentSuccess
+                            |UpdateTournamentFailiure
+           

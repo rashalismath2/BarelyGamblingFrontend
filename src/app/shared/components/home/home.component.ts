@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit ,OnDestroy{
 
   _authUser$: Observable<ILoginDto>
   _componenetActive:boolean
-
+  
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   
@@ -38,16 +38,19 @@ export class HomeComponent implements OnInit ,OnDestroy{
         select(fromAuth.getAuthUser)
       )
 
-  this._authenticactionStore
-      .pipe(
-        select(fromAuth.getSignOutState),
-        takeWhile(()=>this._componenetActive))
-      .subscribe((status:boolean)=>{
-        if(status){
-          this.openSnackBar("Signing out")
-        }
-      })
-      
+    this._authenticactionStore
+        .pipe(
+          select(fromAuth.getSignOutState),
+          takeWhile(()=>this._componenetActive))
+        .subscribe((status:boolean)=>{
+          if(status){
+            this.openSnackBar("Signing out")
+          }
+        })
+  }
+
+  onLogoutEvent(event){
+    this._authenticactionStore.dispatch(new fromAuthActions.Logout())
   }
 
   openSnackBar(message:string){
@@ -59,9 +62,6 @@ export class HomeComponent implements OnInit ,OnDestroy{
   }
   
 
-  onLogoutEvent(event){
-    this._authenticactionStore.dispatch(new fromAuthActions.Logout())
-  }
 
 
 }

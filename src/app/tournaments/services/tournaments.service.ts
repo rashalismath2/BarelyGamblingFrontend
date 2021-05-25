@@ -36,6 +36,12 @@ export class TournamentsService {
       catchError(this.handleError)
     )
   }
+  updateTournament(tournament:ITournament):Observable<ITournament>{
+    return this.http.put<ITournament>(this._url+`/${tournament.id}`,tournament)
+    .pipe(
+      catchError(this.handleError)
+    )
+  }
   
   private handleError(error:HttpErrorResponse) {
     console.log(error)

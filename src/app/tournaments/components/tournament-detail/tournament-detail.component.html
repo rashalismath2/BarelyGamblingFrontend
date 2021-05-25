@@ -1,6 +1,15 @@
 <app-home>
     <div class="home-components">
-        <mat-card class="example-card" *ngIf="_tournament$ | async as _tournament; else noTournamentFound">
+        <div id="tournaments-header" class="row">
+            <div class="col-12">
+                <mat-icon mat-button [matMenuTriggerFor]="menu" class="drawer-button-icons">more_vert</mat-icon >
+                <mat-menu #menu="matMenu">
+                  <a mat-menu-item [routerLink]="[ 'edit']">Edit</a>
+                  <button mat-menu-item>Delete</button>
+                </mat-menu>
+            </div>
+        </div>
+        <mat-card class="example-card" *ngIf="_tournament; else noTournamentFound">
             <app-tournament-banner [teams]='_tournament.teams'></app-tournament-banner>
             <mat-card-content>
                 <ul class="tournament-details-list">

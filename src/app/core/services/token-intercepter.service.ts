@@ -19,7 +19,7 @@ export class ErrorInterceptor implements HttpInterceptor{
         }
       },(err: any) => {
         if (err instanceof HttpErrorResponse && err.status === 401) {
-            // this.router.navigate(["login"],{queryParams:{message:"Please login in order to complete the operation"}});
+           console.error("get refresh token here")
         }
       });
   }
@@ -27,17 +27,15 @@ export class ErrorInterceptor implements HttpInterceptor{
 
 @Injectable()
 export class TokenIntercepterService implements HttpInterceptor{
-  _token:string;
-
   constructor(private injector: Injector,private _authService:AuthenticationService) {
-      this._token=_authService.getJWTToken()
+      
   }
   
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-   
+    var token=this._authService.getJWTToken()
       req = req.clone({
         setHeaders: {
-          'Authorization': `Bearer ${this._token}`
+          'Authorization': `Bearer ${token}`
         }
       });
       return next.handle(req);

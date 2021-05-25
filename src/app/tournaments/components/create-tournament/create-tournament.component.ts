@@ -16,6 +16,10 @@ import * as fromCoreActions from "../../../core/state/core.actions"
 import { Observable } from 'rxjs';
 import { IUser } from 'src/app/core/Entities/IUser';
 import { takeWhile } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { ITournament } from 'src/app/core/Entities/ITournament';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { ITeamMember } from 'src/app/core/Entities/ITeamMember';
 
 
 @Component({
@@ -30,11 +34,17 @@ export class CreateTournamentComponent implements OnInit, OnDestroy {
   searchedUsersElementId:string
   searchedUsersForTeamTwoElementId:string
   componentActive:boolean
+  _tournament:ITournament
+  _operationButtonString:string="Create"
 
+  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+  
   constructor(
+    private route:ActivatedRoute,
     private formBuilder:FormBuilder,
     private tournamentState:Store<fromTournamentReducer.TournamentsState>,
-    private userService:UsersService,
+    private _snackBar: MatSnackBar,
     private coreStore:Store<fromCoreState.State>
     ) { 
 
@@ -45,6 +55,7 @@ export class CreateTournamentComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.componentActive=true
+
     
     this.newTournamentForm=this.formBuilder.group({
       title:"",
@@ -64,6 +75,18 @@ export class CreateTournamentComponent implements OnInit, OnDestroy {
         this.createTeamOneMember()
       ]),
     })
+
+    
+    var resolvedData =this.route.parent.snapshot.data["tournament"]
+    if(resolvedData!=null){  
+      if(resolvedData.error) this.openSnackBar("Error in loading tournaments")
+      if(resolvedData.tournament) {
+        this._operationButtonString="Edit"
+        this._tournament=resolvedData.tournament
+        this.populateFormWithTournamentData(this._tournament);
+      }
+    }
+
  
    this.searchedUsers$=this.coreStore.pipe(select(fromCoreState.getSearchedUsers))
 
@@ -79,6 +102,54 @@ export class CreateTournamentComponent implements OnInit, OnDestroy {
     )
     .subscribe((id)=>this.searchedUsersForTeamTwoElementId=id)
 
+  }
+
+  populateFormWithTournamentData(tournament:ITournament){
+    console.log(tournament)
+    this.newTournamentForm.patchValue({
+      title:tournament.title,
+      vanue:tournament.place,
+      price:tournament.tournamentPrize,
+      description:tournament.description,
+      date:tournament.startingDate,
+      teamOneTitle:tournament.teams[0].title,
+      teamOneDescription:tournament.teams[0].description,
+      teamTwoTitle:tournament.teams[1].title,
+      teamTwoDescription:tournament.teams[1].description,
+    })
+
+    this.newTournamentForm.setControl(
+          "teamOneMembers",
+          this.populateTeamOneMembers(tournament.teams[0].teamMembers)
+    )
+    this.newTournamentForm.setControl(
+      "teamTwoMembers",
+      this.populateTeamTwoMembers(tournament.teams[1].teamMembers)
+    )
+
+  }
+
+  populateTeamOneMembers(members:ITeamMember[]):FormArray{
+    var array=new FormArray([]);
+    members.forEach(member=>{
+      array.push(this.formBuilder.group({
+        type:member.playerType,
+        userId:member.user.id,
+        user:member.user
+      }))
+    })
+    return array;
+  }
+  populateTeamTwoMembers(members:ITeamMember[]):FormArray{
+    var array=new FormArray([]);
+    members.forEach(member=>{
+      array.push(this.formBuilder.group({
+        type:member.playerType,
+        userId:member.user.id,
+        user:member.user
+      }))
+    })
+    return array;
   }
 
   get teamOneMembers():FormArray{
@@ -127,16 +198,10 @@ export class CreateTournamentComponent implements OnInit, OnDestroy {
   }
 
   removeSelectedUserForTeamOne(groupIndex){
-    this.teamOneMembers.at(groupIndex).patchValue({
-      userId:'',
-      user:''
-    })
+    this.teamOneMembers.removeAt(groupIndex)
   }
   removeSelectedUserForTeamTwo(groupIndex){
-    this.teamTwoMembers.at(groupIndex).patchValue({
-      userId:'',
-      user:''
-    })
+    this.teamTwoMembers.removeAt(groupIndex)
   }
 
   onSubmit(form:FormGroup){
@@ -149,7 +214,11 @@ export class CreateTournamentComponent implements OnInit, OnDestroy {
     tournament.tournamentPrize=form.get("price").value
     tournament.teams=[this.getTeamOne(form),this.getTeamTwo(form)]
 
-    this.tournamentState.dispatch(new fromTournamentActions.CreateTournament(tournament))
+    if(this._operationButtonString=="Edit"){ 
+      tournament.id=this._tournament.id
+      this.tournamentState.dispatch(new fromTournamentActions.UpdateTournament(tournament))
+     }
+    else this.tournamentState.dispatch(new fromTournamentActions.CreateTournament(tournament))
   }
 
   getTeamOne(form:FormGroup):Team{
@@ -204,6 +273,14 @@ export class CreateTournamentComponent implements OnInit, OnDestroy {
     searchedUser.searchingForElement="two"
     
     this.coreStore.dispatch(new fromCoreActions.LoadUserByEmail(searchedUser))
+  }
+
+  openSnackBar(message:string){
+    this._snackBar.open(message, "Close",{
+      duration: 3 * 1000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
 }

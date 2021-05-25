@@ -15,16 +15,16 @@ export interface TournamentsState{
     tournaments:ITournament[],
     loadFailiureMessage:string,
     selectedTournamentId:string,
-    creatingTournamentState:boolean,
-    creatingTournamentFailedMessage:string
+    tournamentOperationState:boolean,
+    tournamentOperationFailedMessage:string
 }
 
 const initialState:TournamentsState={
     tournaments:null,
     loadFailiureMessage:null,
     selectedTournamentId:null,
-    creatingTournamentState:false,
-    creatingTournamentFailedMessage:null
+    tournamentOperationState:false,
+    tournamentOperationFailedMessage:null
 }
 
 
@@ -80,7 +80,6 @@ export function reducer(state=initialState,action:TournamentActions):Tournaments
                     //set current tournament has all the data
                     var payload={
                         ...action.payload,
-                        allTheData:true
                     }
                     return {
                         ...state,
@@ -91,9 +90,12 @@ export function reducer(state=initialState,action:TournamentActions):Tournaments
                 return {
                     ...state,
                     loadFailiureMessage:null,
-                    tournaments:state.tournaments.map(tournament=>
-                            tournament.id==action.payload.id?action.payload:tournament
-                        )
+                    tournaments:state.tournaments.map(tournament=>{
+                        if(tournament.id==action.payload.id){
+                            return action.payload
+                        }
+                        return tournament
+                    })
                 }
             case TournamentActionsTypes.LoadSelectedTournamentFailiure: 
                 return {
@@ -104,19 +106,36 @@ export function reducer(state=initialState,action:TournamentActions):Tournaments
             case TournamentActionsTypes.CreateTournament: 
                 return {
                     ...state,
-                    creatingTournamentState:true,
+                    tournamentOperationState:true,
                 }
             case TournamentActionsTypes.CreateTournamentSuccess: 
                 return {
                     ...state,
-                    creatingTournamentState:false,
-                    tournaments:[...state.tournaments,action.payload]
+                    tournamentOperationState:false,
+                    tournamentOperationFailedMessage:null,
                 }
             case TournamentActionsTypes.CreateTournamentFailiure: 
                 return {
                     ...state,
-                    creatingTournamentState:false,
-                    creatingTournamentFailedMessage:action.payload
+                    tournamentOperationState:false,
+                    tournamentOperationFailedMessage:action.payload
+                }
+            case TournamentActionsTypes.UpdateTournament: 
+                return {
+                    ...state,
+                    tournamentOperationState:true,
+                    tournamentOperationFailedMessage:null,
+                }
+            case TournamentActionsTypes.UpdateTournamentSuccess: 
+                return {
+                    ...state,
+                    tournamentOperationState:false
+                }
+            case TournamentActionsTypes.UpdateTournamentFailiure: 
+                return {
+                    ...state,
+                    tournamentOperationState:false,
+                    tournamentOperationFailedMessage:action.payload
                 }
             default:
                 return state;

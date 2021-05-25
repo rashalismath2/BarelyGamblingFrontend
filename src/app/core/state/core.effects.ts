@@ -4,6 +4,7 @@ import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Action } from "@ngrx/store";
 import { Observable, of } from "rxjs";
 import { catchError, map, switchMap, tap } from "rxjs/operators";
+import { ILoginDto } from "../Entities/ILoginDto";
 import { ISignInInput } from "../Entities/ISignInInput";
 import { ISignUpInput } from "../Entities/ISignupInput";
 import { IUser } from "../Entities/IUser";
@@ -40,11 +41,11 @@ export class CoreEffect{
 
     @Effect({ dispatch: false })
     logInSuccess$: Observable<any> = this.actions$.pipe(
-    ofType(fromActions.CoreActionTypes.LoginSuccess),
-    tap((user) => {
-        localStorage.setItem("auth_user",JSON.stringify(user.payload))
-        this.router.navigate(["/home"],{queryParams:{loginSuccess:"Login was successful"}});
-    })
+        ofType(fromActions.CoreActionTypes.LoginSuccess),
+        tap((user) => {
+            localStorage.setItem("auth_user",JSON.stringify(user.payload))
+            this.router.navigate(["/"],{queryParams:{loginSuccess:"Login was successful"}});
+        })
     );
 
     @Effect()
@@ -60,11 +61,11 @@ export class CoreEffect{
     )
 
     @Effect({ dispatch: false })
-    signupSuccess$: Observable<any> = this.actions$.pipe(
-    ofType(fromActions.CoreActionTypes.SignupSuccess),
-    tap((user) => {
-        this.router.navigate(["/login"],{queryParams:{signupSuccess:"Signup was successful. Please login to continue"}});
-    })
+        signupSuccess$: Observable<any> = this.actions$.pipe(
+        ofType(fromActions.CoreActionTypes.SignupSuccess),
+        tap((user) => {
+            this.router.navigate(["/login"],{queryParams:{signupSuccess:"Signup was successful. Please login to continue"}});
+        })
     );
 
     @Effect()

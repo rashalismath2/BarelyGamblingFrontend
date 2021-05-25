@@ -69,6 +69,16 @@ export class LoginComponent implements OnInit,OnDestroy {
      
   }
 
+  onSubmit(logingDetails:FormGroup){
+    if(logingDetails.valid){
+      var auth=new Auth(
+        logingDetails.value.email,
+        logingDetails.value.password
+      );
+      this.authenticationState.dispatch(new fromActions.Login(auth))
+    }
+  }
+  
   openSnackBar(message:string){
     this._snackBar.open(message, "Close",{
       duration: 3 * 1000,
@@ -77,17 +87,7 @@ export class LoginComponent implements OnInit,OnDestroy {
     });
   }
   
-  onSubmit(logingDetails:FormGroup){
-    if(logingDetails.valid){
-      var auth=new Auth(
-        logingDetails.value.email,
-        logingDetails.value.password
-      );
-   
-      this.authenticationState.dispatch(new fromActions.Login(auth))
-    }
-     
-  }
+
 
   ngOnDestroy(): void {
       this._componentIsActive=false

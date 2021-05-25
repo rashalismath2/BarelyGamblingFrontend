@@ -5,10 +5,10 @@ import { Observable } from 'rxjs';
 import { ILoginDto } from '../../../core/Entities/ILoginDto';
 import { ITournament } from '../../../core/Entities/ITournament';
 import * as fromTournamentReducer from '../../state/reducer';
-import { LoadSelectedTournament, SetSelectedTournamentId } from '../../state/tournaments.actions';
 
 import * as fromAuth from '../../../core/state/reducer';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import * as fromTournamentActions from "../../state/tournaments.actions"
 
 @Component({
   selector: 'app-tournament-detail',
@@ -19,12 +19,12 @@ export class TournamentDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private tournamentStore: Store<fromTournamentReducer.TournamentsState>,
     private _authenticactionStore: Store<fromAuth.CoreState>,
+    private _tournamentStore: Store<fromTournamentReducer.TournamentsState>,
     private _snackBar: MatSnackBar,
   ) { }
 
-  _tournament$: Observable<ITournament>;
+  _tournament: ITournament;
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   _authUser$: Observable<ILoginDto>
@@ -37,18 +37,18 @@ export class TournamentDetailComponent implements OnInit {
       )
 
     this.route.queryParams.subscribe(params=>{
-      if(params.tournament_created){
-        this.openSnackBar(params.signupSuccess)
+      if(params.tournament_operation){
+        this.openSnackBar(params.tournament_operation)
       }
     })
     
-    this.tournamentStore.dispatch(new SetSelectedTournamentId(this.route.snapshot.paramMap.get("id")))
-    this.tournamentStore.dispatch(new LoadSelectedTournament(this.route.snapshot.paramMap.get("id")))
 
-    this._tournament$ = this.tournamentStore.pipe(
-      select(fromTournamentReducer.getSelectedTournament)
-    )
-    
+    var resolvedData =this.route.parent.snapshot.data["tournament"]
+    if(resolvedData.error)  this.openSnackBar("Error in loading tournaments")
+    if(resolvedData.tournament){
+      this._tournament=resolvedData.tournament
+      this._tournamentStore.dispatch(new fromTournamentActions.LoadSelectedTournamentSuccess(resolvedData.tournament))
+    }
   }
 
   openSnackBar(message:string){
