@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { TournamentsResolved } from '../models/tournaments-resolved';
-import { TournamentsService } from './tournaments.service';
+import { TournamentsService } from '../services/tournaments.service';
 import * as fromTournamentReducer from "../state/reducer"
 import * as fromTournamentActions from "../state/tournaments.actions"
 import { catchError, map, take } from 'rxjs/operators';

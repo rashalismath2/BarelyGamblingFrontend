@@ -44,13 +44,15 @@ export class TournamentsService {
   }
   
   private handleError(error:HttpErrorResponse) {
-    console.log(error)
     let errorMessage=""
     if(error.error instanceof ErrorEvent){
       errorMessage=error.error.message
     }
     else if(error.status && error.status==401){
       errorMessage="You have to be signed in to proceed with this action"
+    }
+    else if(error.status && error.status==400){
+      errorMessage="Please check all the input fields"
     }
     else{
       errorMessage="An error occured. Please try again"

@@ -1,4 +1,7 @@
 <app-home>
+    <div *ngIf="spinner" id="overlay-spinner">
+        <mat-spinner ></mat-spinner>
+    </div>
     <div id="tournaments-header" class="row">
         <div class="col-8">
             <p>
@@ -14,13 +17,13 @@
         </div>
     </div>
     <div class="home-components">
-        <div id="tournament-card-containor" *ngIf="_tournaments!=null && _tournaments.length>0;else tournamentsLoading">
+        <div id="tournament-card-containor" *ngIf="_tournaments!=null && _fetchingTournamentsComplete;else tournamentsLoading">
             <app-tournament-card (selectedTournament)='selectedTournament.emit($event)'   class="tournament-card" [_tournament]='tournament' *ngFor="let tournament of _tournaments"></app-tournament-card>
         </div>
     
         <ng-template #tournamentsLoading>
-            <div id="loading-spinner" >
-                <mat-spinner  *ngIf="_tournaments==null && _fetchingTournamentsComplete==false;else noTournamentsFound"></mat-spinner>
+            <div id="loading-spinner" *ngIf="_tournaments==null && !_fetchingTournamentsComplete;else noTournamentsFound">
+                <mat-spinner></mat-spinner>
             </div>
         </ng-template>
         <ng-template #noTournamentsFound>

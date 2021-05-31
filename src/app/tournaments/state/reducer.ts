@@ -39,6 +39,10 @@ export const getLoadFailiureMessage=createSelector(
     getTournamentFutureState,
     state=>state.loadFailiureMessage
 )
+export const getTournamentCreationFailiureMessage=createSelector(
+    getTournamentFutureState,
+    state=>state.tournamentOperationFailedMessage
+)
 
 export const getSelectedTournamentId=createSelector(
     getTournamentFutureState,

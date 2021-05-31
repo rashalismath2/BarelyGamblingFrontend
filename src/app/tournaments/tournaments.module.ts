@@ -13,7 +13,7 @@ import { TournamentEffects } from './state/tournament.effects';
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './state/reducer';
 import { TournamentRoutingModule } from './tournaments-routing.module';
-import { TournamentsResolverService } from './services/tournaments-resolver.service';
+import { TournamentsResolverService } from './resolvers/tournaments-resolver.service';
 import { TournamentsListComponent } from './components/tournaments-list/tournaments-list.component';
 import { CreateTournamentComponent } from './components/create-tournament/create-tournament.component';
 import { TournamentComponent } from './tournament/tournament.component';

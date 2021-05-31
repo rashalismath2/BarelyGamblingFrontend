@@ -1,7 +1,7 @@
 import { OnDestroy } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import { ActivatedRoute, Params } from '@angular/router';
+import {Event, ActivatedRoute, Params, Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { takeWhile } from 'rxjs/operators';
 import { ITournament } from '../../../core/Entities/ITournament';
@@ -14,23 +14,36 @@ import * as fromTournamentReducer from '../../state/reducer';
 })
 export class TournamentsComponent implements OnInit,OnDestroy {
 
-  _tournaments:ITournament[]
-  _fetchingTournamentsComplete:boolean
+  _tournaments:ITournament[]=null
+  _fetchingTournamentsComplete:boolean=false
   componentActive: boolean;
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+  spinner: boolean;
 
   constructor(
-    private route:ActivatedRoute,
-    private _snackBar: MatSnackBar,
-    private tournamentStore:Store<fromTournamentReducer.State>) 
-  { }
+      private route:ActivatedRoute,
+      private router:Router,
+      private _snackBar: MatSnackBar,
+      private tournamentStore:Store<fromTournamentReducer.State>
+    ) 
+    {  }
 
   ngOnInit(): void {
     this.componentActive=true
-    this._fetchingTournamentsComplete=false
 
+    this.router.events.subscribe((routerEvent:Event)=>{
+      this.checkRouterEvent(routerEvent)
+    })
+
+    this.getQueryMessagesFromTheUrl();
+    this.getTournamentsFromTheState();
+    this.getErrorsFromTheState();
+
+  }
+
+  getQueryMessagesFromTheUrl(){
     this.route.queryParams
       .pipe(
         takeWhile(()=>this.componentActive)
@@ -40,7 +53,11 @@ export class TournamentsComponent implements OnInit,OnDestroy {
           this.openSnackBar(params.loginSuccess || params.logoutSuccess)
         }
     })
-    
+  }
+
+  getTournamentsFromTheState(){
+    this._fetchingTournamentsComplete=false 
+
     this.tournamentStore
     .pipe(select(fromTournamentReducer.getTournaments),
       takeWhile(()=>this.componentActive))
@@ -50,9 +67,12 @@ export class TournamentsComponent implements OnInit,OnDestroy {
         this._fetchingTournamentsComplete=true 
       },
       error:()=>{
+        this._fetchingTournamentsComplete=true 
       }
     })
+  }
 
+  getErrorsFromTheState(){
     this.tournamentStore
     .pipe(select(fromTournamentReducer.getLoadFailiureMessage),
       takeWhile(()=>this.componentActive))
@@ -62,7 +82,16 @@ export class TournamentsComponent implements OnInit,OnDestroy {
         this.openSnackBar(error)
       }
     })
+  } 
 
+  checkRouterEvent(routerEvent: Event) {
+      if(routerEvent instanceof NavigationStart) this.spinner=true
+
+      var events= routerEvent instanceof NavigationEnd
+                ||  routerEvent instanceof NavigationCancel
+                ||  routerEvent instanceof NavigationError
+
+      if(events) this.spinner=false
   }
 
   openSnackBar(message:string){
