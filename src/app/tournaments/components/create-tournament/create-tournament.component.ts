@@ -34,12 +34,14 @@ export class CreateTournamentComponent implements OnInit, OnDestroy,CanComponent
   searchedUsersForTeamTwoElementId:string
   componentActive:boolean
   spinner:boolean=false
+  submitted: boolean=false
 
   _tournament:ITournament
   _operationButtonString:string="Create"
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+ 
   
   constructor(
     private route:ActivatedRoute,
@@ -51,7 +53,7 @@ export class CreateTournamentComponent implements OnInit, OnDestroy,CanComponent
     ) { }
 
   canDeactivate (){
-    if(this.newTournamentForm.dirty) return window.confirm("You have some unsaved changes")
+    if(this.newTournamentForm.dirty && !this.submitted) return window.confirm("You have some unsaved changes")
     return true
   }
 
@@ -238,6 +240,7 @@ export class CreateTournamentComponent implements OnInit, OnDestroy,CanComponent
     tournament.teams=[this.getTeamOne(form),this.getTeamTwo(form)]
 
     this.spinner=true
+    this.submitted=true
 
     if(this._operationButtonString=="Edit"){ 
       tournament.id=this._tournament.id
@@ -254,6 +257,7 @@ export class CreateTournamentComponent implements OnInit, OnDestroy,CanComponent
     .subscribe(message=>{
       if(message!=null) {
         this.spinner=false
+        this.submitted=false
         this.openSnackBar(message)
       }
     })
