@@ -1,0 +1,96 @@
+<div *ngIf="userDetailUpdateStatus" id="overlay-spinner">
+  <mat-spinner ></mat-spinner>
+</div>
+<app-user-avatar [userCover]="authUser.user.coverUrl" (profileImage)="setImageForForm($event)"></app-user-avatar>
+<hr />
+<section *ngIf="!editProfile">
+    <div class="row profile-section p-2">
+        <div class="col-8 mx-auto">
+            <p class="font-weight-bold">{{authUser.user.firstName}} {{authUser.user.lastName}}</p>
+        </div>
+    </div>
+    <div class="row profile-section p-2">
+        <div class="col-8 mx-auto">
+            <p>{{authUser.user.userName}}</p>
+        </div>
+    </div>
+</section>
+<section class="px-2" *ngIf="editProfile">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm)">
+        <div class="row">
+            <div class="col-6">
+              <div class="example-container">
+                <mat-form-field appearance="fill">
+                  <mat-label>First Name</mat-label>
+                  <input matInput  formControlName="firstName"  />
+                  <mat-icon matPrefix>account_circle</mat-icon>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="example-container">
+                <mat-form-field appearance="fill">
+                  <mat-label>Last Name</mat-label>
+                  <input matInput  formControlName="lastName"  />
+                  <mat-icon matPrefix>account_circle</mat-icon>
+                </mat-form-field>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+              <div class="example-container">
+                <mat-form-field appearance="fill">
+                  <mat-label>Email</mat-label>
+                  <input disabled matInput [value]="authUser.user.userName" />
+                  <mat-icon matPrefix>email</mat-icon>
+                </mat-form-field>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <p class="font-weight-bold d-inline">Change Password</p>
+                <mat-icon id="change-password-button" (click)="changePassword()" matPrefix>edit</mat-icon>
+            </div>
+        </div>
+        <div class="row" *ngIf="editPassword">
+            <div class="col-6">
+              <div class="example-container">
+                <mat-form-field appearance="fill">
+                  <mat-label>Old password</mat-label>
+                  <input (change)="passwordsOnChange()" type="password" matInput  formControlName="oldPassword"  />
+                  <mat-icon matPrefix>lock</mat-icon>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="example-container">
+                <mat-form-field appearance="fill">
+                  <mat-label>New password</mat-label>
+                  <input (change)="passwordsOnChange()" type="password" matInput  formControlName="newPassword"  />
+                  <mat-icon matPrefix>lock</mat-icon>
+                </mat-form-field>
+              </div>
+            </div>
+        </div>
+        <div *ngIf="errorMessages!=null" class="row text-center profile-section p-2">
+          <p class="text-danger">{{errorMessages}}</p>
+        </div>
+        <div class="row profile-section p-2">
+            <div class="col-12 mt-2 profile-controls">
+                <button [disabled]="userDetailUpdateStatus" class="mr-2" mat-flat-button (click)="StartEdit(false)" color="warn">Cancel</button>
+                <button [disabled]="userDetailUpdateStatus || userForm.invalid" type="submit" mat-flat-button color="primary">Save</button>
+            </div>
+        </div>
+    </form>
+</section>
+
+<div *ngIf="userDetailUpdateSuccessStatus" class="row text-center profile-section p-2">
+  <p class="text-success">Use updateing was successful</p>
+</div>
+<section class="row profile-section p-2">
+    <div *ngIf="!editProfile" class="col-12 mt-2 profile-controls">
+        <button (click)="StartEdit(true)" mat-flat-button color="warn">Edit</button>
+    </div>
+</section>

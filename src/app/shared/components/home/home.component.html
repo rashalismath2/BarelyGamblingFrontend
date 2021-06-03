@@ -1,26 +1,41 @@
-<section id="app-nav-bar">
-    <app-nav-bar (logoutEvent)='onLogoutEvent($event)' [authUser]='_authUser$ | async '></app-nav-bar>
-</section>
-<mat-drawer-container id="app-drawer-container" class="example-container">
-    <mat-drawer class="pt-4" id="side-drawer" mode="side" opened="opened">
-        <section class="container-fluid">
-            <a  
-                [routerLink]="[ '/tournaments']"  
-                class="drawer-buttons" mat-stroked-button color="primary">
-                <mat-icon  class="drawer-button-icons">space_dashboard</mat-icon>
-                Tournaments
-            </a>
-            <a  
-                [routerLink]="[ '/biddings']"  
-                class="drawer-buttons"  mat-stroked-button color="primary">
-                <mat-icon class="drawer-button-icons">leaderboard</mat-icon>
-                Biddings
-            </a>
-        </section>
+<mat-drawer-container [hasBackdrop]="true" class="example-container" autosize>
+    <mat-drawer id="user-profile-drawer" position="end" #profileDrawer class="example-sidenav" mode="over">
+      <app-profile  *ngIf="_authUser$ | async as authUser" [authUser]='authUser'></app-profile>
     </mat-drawer>
-    <mat-drawer-content class="pt-4">
-        <section class="container-fluid">
-            <ng-content selector=".home-components"></ng-content>
+
+    <mat-drawer-content >
+        <section id="app-nav-bar">
+            <app-nav-bar 
+                (profileEvent)='profileDrawer.toggle()' 
+                (logoutEvent)='onLogoutEvent($event)' 
+                [authUser]='_authUser$ | async'>
+            </app-nav-bar>
         </section>
+    
+        <mat-drawer-container id="app-drawer-container" class="example-container">
+            <mat-drawer class="pt-4" id="side-drawer" mode="side" opened="opened">
+                <section class="container-fluid">
+                    <a  
+                        [routerLink]="[ '/tournaments']"  
+                        class="drawer-buttons" mat-stroked-button color="primary">
+                        <mat-icon  class="drawer-button-icons">space_dashboard</mat-icon>
+                        Tournaments
+                    </a>
+                    <a  
+                        [routerLink]="[ '/biddings']"  
+                        class="drawer-buttons"  mat-stroked-button color="primary">
+                        <mat-icon class="drawer-button-icons">leaderboard</mat-icon>
+                        Biddings
+                    </a>
+                </section>
+            </mat-drawer>
+            <mat-drawer-content class="pt-4">
+                <section class="container-fluid">
+                    <ng-content selector=".home-components"></ng-content>
+                </section>
+            </mat-drawer-content>
+        </mat-drawer-container>
+
     </mat-drawer-content>
-</mat-drawer-container>
+  </mat-drawer-container>
+  

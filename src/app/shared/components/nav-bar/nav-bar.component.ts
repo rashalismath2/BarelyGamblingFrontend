@@ -10,6 +10,7 @@ export class NavBarComponent implements OnInit {
 
   @Input() authUser:ILoginDto
   @Output() logoutEvent:EventEmitter<boolean>=new EventEmitter<boolean>(); 
+  @Output() profileEvent:EventEmitter<boolean>=new EventEmitter<boolean>(); 
 
   constructor() { }
 
@@ -19,6 +20,9 @@ export class NavBarComponent implements OnInit {
 
   logout(){
     this.logoutEvent.emit(true)
+  }
+  openProfileDrawer(){
+    this.profileEvent.emit(true)
   }
 
 }

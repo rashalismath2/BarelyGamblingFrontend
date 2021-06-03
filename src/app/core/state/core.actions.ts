@@ -3,6 +3,7 @@ import { ISignInInput } from "../Entities/ISignInInput";
 import { ILoginDto } from "../Entities/ILoginDto";
 import { SearchedUser } from "../Entities/SearchedUser";
 import { IUser } from "../Entities/IUser";
+import { UpdateUserDto } from "../Entities/UpdateUserDto";
 
 
 export enum CoreActionTypes{
@@ -21,6 +22,9 @@ export enum CoreActionTypes{
     LoadUserByEmailSuccess="[user] LoadUserByEmailSuccess",
     LoadUserByEmailFailure="[user] LoadUserByEmailFailure",
 
+    UpdateUserDetails="[user] UpdateUserDetails",
+    UpdateUserDetailsSuccess="[user] UpdateUserDetailsSuccess",
+    UpdateUserDetailsFailure="[user] UpdateUserDetailsFailure",
 }
 
 
@@ -72,6 +76,19 @@ export class LoadUserByEmailFailure implements Action{
     constructor(public payload:string) {  }
 }
 
+export class UpdateUserDetails implements Action{
+    readonly type=CoreActionTypes.UpdateUserDetails;
+    constructor(public payload:UpdateUserDto) {  }
+}
+export class UpdateUserDetailsSuccess implements Action{
+    readonly type=CoreActionTypes.UpdateUserDetailsSuccess;
+    constructor(public payload:IUser) {  }
+}
+export class UpdateUserDetailsFailure implements Action{
+    readonly type=CoreActionTypes.UpdateUserDetailsFailure;
+    constructor(public payload:string) {  }
+}
+
 
 export type CoreActions=Login
                             |LoginSuccess
@@ -81,7 +98,10 @@ export type CoreActions=Login
                             |SignupFailiure
                             |Logout
                             |LogoutSuccess
-                            | LoadUserByEmail 
-                            | LoadUserByEmailSuccess 
-                            | LoadUserByEmailFailure
+                            |LoadUserByEmail 
+                            |LoadUserByEmailSuccess 
+                            |LoadUserByEmailFailure
+                            |UpdateUserDetails 
+                            |UpdateUserDetailsSuccess 
+                            |UpdateUserDetailsFailure
                             ;

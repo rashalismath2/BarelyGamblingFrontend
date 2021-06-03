@@ -17,6 +17,8 @@ export interface CoreState{
         errorMessage:string,
         authenticationIsInProcess:boolean,
         logingOutIsOnProcess:boolean,
+        userDetailUpdateStatus:boolean,
+        userDetailUpdateStatusSuccess:boolean,
    },
    searchedUsers:{
     users:IUser[],
@@ -31,7 +33,9 @@ const initialState:CoreState={
         AuthUser:null ||  JSON.parse(localStorage.getItem('auth_user')),
         errorMessage:null,
         authenticationIsInProcess:false,
-        logingOutIsOnProcess:false
+        logingOutIsOnProcess:false,
+        userDetailUpdateStatus:false,
+        userDetailUpdateStatusSuccess:false,
     },
     searchedUsers:{
         users:[],
@@ -73,6 +77,14 @@ export const getSearchedUsersElementId=createSelector(
 export const searchedUsersForTeamTwoElementId=createSelector(
     getCoreFutureState,
     state=>state.searchedUsers.elementForTeamTwo
+)
+export const getUserDetailUpdateStatus=createSelector(
+    getCoreFutureState,
+    state=>state.authentication.userDetailUpdateStatus
+)
+export const getUserDetailUpdateSuccessStatus=createSelector(
+    getCoreFutureState,
+    state=>state.authentication.userDetailUpdateStatusSuccess
 )
 
 
@@ -192,6 +204,42 @@ export function reducer(state=initialState,action:CoreActions):CoreState{
                         users:[],
                         element:null,
                         elementForTeamTwo:null,
+                    }
+                }
+            case CoreActionTypes.UpdateUserDetails:
+                return {
+                    ...state,
+                    authentication:{
+                       ...state.authentication,
+                        errorMessage:null,
+                        userDetailUpdateStatus:true,
+                        userDetailUpdateStatusSuccess:false
+                    }
+                }
+            case CoreActionTypes.UpdateUserDetailsSuccess:
+                return {
+                    ...state,
+                    authentication:{
+                       ...state.authentication,
+                        userDetailUpdateStatus:false,
+                        userDetailUpdateStatusSuccess:true,
+                       AuthUser:{
+                           ...state.authentication.AuthUser,
+                            user:{
+                                ...state.authentication.AuthUser.user,
+                                firstName:action.payload.firstName,
+                                lastName:action.payload.lastName
+                            }
+                       }
+                    }
+                }
+            case CoreActionTypes.UpdateUserDetailsFailure:
+                return {
+                    ...state,
+                    authentication:{
+                       ...state.authentication,
+                       errorMessage:action.payload,
+                       userDetailUpdateStatus:false
                     }
                 }
         default:

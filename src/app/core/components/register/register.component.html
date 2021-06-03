@@ -13,11 +13,7 @@
                 <div id="auth-form-cont">
                     <h3>Sign up</h3>
                     <form id="authForm" [formGroup]="authForm" (ngSubmit)="onSubmit(authForm)">
-                      <div id="register-user-avatar">
-                        <input (change)="setImage(cover.files)" #cover  id="profileCover" type="file" accept="image/png, image/jpeg, image/jpg" />
-                        <img [src]="imgURL || '../../../../../assets/images/user-avatar.png'"  alt="" srcset="">
-                        <mat-icon (click)="cover.click()" matPrefix>edit</mat-icon>
-                      </div>
+                      <app-user-avatar (profileImage)="setImageForForm($event)"></app-user-avatar>
                       <div class="row">
                         <div class="col">
                           <div class="example-container">

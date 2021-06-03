@@ -17,7 +17,6 @@ import * as fromAuthState from '../../state/reducer';
 export class RegisterComponent implements OnInit,OnDestroy {
 
   authForm:FormGroup;
-  imgURL: any;
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
@@ -31,24 +30,6 @@ export class RegisterComponent implements OnInit,OnDestroy {
 
   ngOnDestroy(): void {
     this._componentIsActive=false;
-  }
-
- 
-  setImage(files) {
-    if (files.length === 0)
-      return;
-    var reader = new FileReader();
-    
-    reader.readAsDataURL(files[0]); 
-    reader.onload = (_event) => { 
-      this.imgURL = reader.result; 
-    }
-
-    this.authForm.patchValue({
-      profilePicture: files[0]
-    });
-    this.authForm.get('profilePicture').updateValueAndValidity()
-
   }
 
   ngOnInit(): void {
@@ -77,6 +58,12 @@ export class RegisterComponent implements OnInit,OnDestroy {
       duration: 3 * 1000,
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
+    });
+  }
+
+  setImageForForm(event){
+    this.authForm.patchValue({
+      profilePicture: event
     });
   }
 

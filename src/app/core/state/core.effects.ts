@@ -9,6 +9,7 @@ import { ISignInInput } from "../Entities/ISignInInput";
 import { ISignUpInput } from "../Entities/ISignupInput";
 import { IUser } from "../Entities/IUser";
 import { SearchedUser } from "../Entities/SearchedUser";
+import { UpdateUserDto } from "../Entities/UpdateUserDto";
 import { AuthenticationService } from "../services/authentication.service";
 import { UsersService } from "../services/users.service";
 
@@ -101,5 +102,36 @@ export class CoreEffect{
             )
         }
         )
+    )
+
+    @Effect()
+    updateUserDetails$:Observable<Action>=this.actions$.pipe(
+        ofType(fromActions.CoreActionTypes.UpdateUserDetails),
+        map((action:fromActions.UpdateUserDetails)=>action.payload),
+        switchMap((userDetails:UpdateUserDto)=>
+        {
+            return this.usersService.updateUser(userDetails).pipe(
+                map((updateUser:IUser)=>(new fromActions.UpdateUserDetailsSuccess(updateUser))),
+                catchError(error=>of(new fromActions.UpdateUserDetailsFailure(error)))
+            )
+        })
+    )
+    
+    @Effect({ dispatch: false })
+    updateUserDetailsSuccess$:Observable<void>=this.actions$.pipe(
+        ofType(fromActions.CoreActionTypes.UpdateUserDetailsSuccess),
+        map((action:fromActions.UpdateUserDetailsSuccess)=>{
+            var user=action.payload
+            var userFromLocal=JSON.parse(localStorage.getItem("auth_user"))
+            userFromLocal={
+                ...userFromLocal,
+                user:{
+                    ...userFromLocal.user,
+                    firstName:user.firstName,
+                    lastName:user.lastName
+                }
+            }
+            localStorage.setItem("auth_user",JSON.stringify(userFromLocal))
+        })
     )
 }

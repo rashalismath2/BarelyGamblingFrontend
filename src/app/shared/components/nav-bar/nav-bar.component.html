@@ -6,7 +6,7 @@
             <div *ngIf='authUser; else showLogin'>
                 <button mat-button [matMenuTriggerFor]="menu">{{authUser.user.firstName}}</button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Profile</button>
+                    <button (click)="openProfileDrawer()" mat-menu-item>Profile</button>
                     <button (click)="logout()" mat-menu-item>Logout</button>
                 </mat-menu>
             </div>

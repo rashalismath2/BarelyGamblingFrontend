@@ -1,0 +1,5 @@
+<div id="register-user-avatar">
+    <input (change)="setImage(cover.files)" #cover  id="profileCover" type="file" accept="image/png, image/jpeg, image/jpg" />
+  <img [src]="imgURL || userCover || '../../../../../assets/images/user-avatar.png'"  alt="" srcset="">
+    <mat-icon (click)="cover.click()" matPrefix>edit</mat-icon>
+  </div>

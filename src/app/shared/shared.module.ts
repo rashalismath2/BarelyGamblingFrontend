@@ -18,16 +18,24 @@ import {MatSelectModule} from '@angular/material/select';
 
 import { HomeComponent } from './components/home/home.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
+// import { StoreModule } from '@ngrx/store';
+
+// import { reducer } from './store/state'
 
 @NgModule({
   declarations: [
     NavBarComponent,
     HomeComponent,
+    ProfileComponent,
+    UserAvatarComponent,
 
   ],
   imports: [
     CommonModule,
     RouterModule.forChild([]),
+    // StoreModule.forFeature("shared",reducer),
     ReactiveFormsModule,
     MatButtonModule,
     MatMenuModule,
@@ -53,13 +61,15 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     MatDividerModule,
     MatFormFieldModule,
     MatInputModule,
-    HttpClientModule,
     MatSnackBarModule,
+    MatSelectModule,
+    MatMenuModule,
+    
+    HttpClientModule,
     NavBarComponent,
     CommonModule,
     HomeComponent,
-    MatSelectModule,
-    MatMenuModule
+    UserAvatarComponent,
   ]
 })
 export class SharedModule { }

@@ -115,30 +115,3 @@ form mat-form-field{
     text-decoration: underline;
 }
 
-
-#register-user-avatar{
-    width: 70px;
-    height: 70px;
-    margin: 20px auto;
-    position: relative;
-}
-#register-user-avatar img{
-    background: white;
-  border-radius: 50%;
-}
-#register-user-avatar mat-icon{
-    position: absolute;
-    border: 0;
-    top: 45px;
-    left: 53px;
-    background: white;
-    border-radius: 50%;
-    color: $background-blue;
-    font-size: 20px;
-    padding: 3px;
-    cursor: pointer;
-}
-
-#profileCover{
-    display: none;
-}
